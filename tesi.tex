@@ -1,6 +1,6 @@
-\newif\ifpdf
-\ifx\pdfoutput\undefined \pdffalse \else \ifnum\pdfoutput=1
-\pdftrue \else \pdffalse \fi \fi
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined \pdffalse \else \ifnum\pdfoutput=1
+%\pdftrue \else \pdffalse \fi \fi
 
 %\documentclass[12pt,a4paper,oneside, titlepage,fleqn,italian]{book} %stampa
 \documentclass[12pt,a4paper,twoside,openright,titlepage,fleqn,italian]{book}
@@ -18,11 +18,11 @@
 \usepackage{longtable}
 
 \renewcommand{\thesection}{\arabic{section}}
-\addtolength{\voffset}{-0,5cm}
-\addtolength{\textheight}{1cm}
-\setlength{\parindent}{0pt}
-\frenchspacing
-\linespread{1.25}
+%\addtolength{\voffset}{-0,5cm}
+%\addtolength{\textheight}{1cm}
+%\setlength{\parindent}{0pt}
+%\frenchspacing
+%\linespread{1.25}
 
 
 \usepackage{fancyhdr}
@@ -46,7 +46,7 @@
 \fancyhead[LO]{\nouppercase{\rightmark}} %Displays the lower-level (chapter) information - as
 %determined above - in the header, to the left on odd pages.
  
-%\usepackage{layaureo}
+
 \usepackage{frontesp} 	% frontespizio unibo 
 			% modificare frontesp.sty al variare del numero di correlatori
 
@@ -115,7 +115,7 @@
 \input{app}
 
 
-\addtolength{\parskip}{5pt}
+%\addtolength{\parskip}{5pt}
 
 
 \input{bibliografia}
