@@ -1,0 +1,49 @@
+% The following variables are defined for the thesis title page
+	% The name of the laurea course
+	\def\titolocorso#1{\gdef\titolocorso{#1}}
+	\usepackage{color}
+	
+	
+	\def\nomemateria#1{\gdef\nomemateria{#1}}
+	% The Academic year the degree will be officially conferred
+	\def\session#1{\gdef\session{#1}}
+	% The Session Number
+	\def\degreeyear#1{\gdef\degreeyear{#1}}
+	% The name of your committee's chair
+	\def\principaladviser#1{\gdef\principaladviser{#1}}
+	% The names of your other committe members, one per line
+	\def\firstreader#1{\gdef\firstreader{#1}}
+	\def\secondreader#1{\gdef\secondreader{#1}}
+	\def\thirdreader#1{\gdef\thirdreader{#1}}
+	% The number of committee members, which affects both the
+	% number of lines and the amount of space between lines
+	% on the approval page.
+%	\def\numberofmembers{2}
+%	\def\approvalspace{.75in}
+	
+%	\def\numberofmembers#1{
+%		\gdef\@numberofmembers{#1}
+%		\ifnum \numberofmembers > 3
+%		\gdef\approvalspace{.5in}
+%	\fi}
+
+
+
+% The \maketitle command is adapted to build a
+% title page suitable for the University of Bologna.
+%
+%\ProcessOptions\relax
+
+
+
+\def\dedica#1{\gdef\dedica{#1}}
+\newcommand{\makededica}
+{
+  \thispagestyle{empty}
+  \begin{flushright}
+  \textcolor{white}{.}\\
+  \vspace{4cm}
+  \dedica
+  \end{flushright}
+  \pagebreak 
+}
