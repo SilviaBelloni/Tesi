@@ -47,10 +47,10 @@ Come visto nel paragrafo 1.3, il fascio di luce che raggiunge il campione deve a
 Per soddisfare al meglio queste due richieste si sfruttano due filtri:
 
 \begin{itemize}
-\item \textbf{Fitro di eccitazione}
+\item \textbf{Fitro di eccitazione}\\
 Serve per filtrare la luce proveniente dalla sorgente prima che raggiunga il campione, lasciando passare così solo la lunghezza d'onda di eccitazione.
 
-\item \textbf{Filtro barriera o di sbarramento}
+\item \textbf{Filtro barriera o di sbarramento}\\
 Serve per filtrare la luce proveniente dal campione, bloccando così la radiazione di illuminazione non assorbita dal fluoroforo e lasciando quindi passare solo quella di emissione. 
 \end{itemize}
 
@@ -158,7 +158,6 @@ In \tablename~\ref{TAB} sono riportate le bande di eccitazione e di emissione de
 \end{table}
 
 \item \textbf{Telecamera}\\
-Il rivelatore CCD di cui è dotato il microscopio è una telecamera Qimaging, modello RETIGA-2000-RV (\figurename~\ref{fig:CCD}), in grado di rilevare segnali di bassa intensità, con un alto range dinamico e applicazioni rapide, caratteristiche che la rendono particolarmente adatta per l'imaging dinamico in vivo e in fluorescenza.
 
 \begin{figure}
  \centering
@@ -167,6 +166,7 @@ Il rivelatore CCD di cui è dotato il microscopio è una telecamera Qimaging, mo
  \label{fig:CCD}
 \end{figure}
 
+Il rivelatore CCD di cui è dotato il microscopio è una telecamera Qimaging, modello RETIGA-2000-RV (\figurename~\ref{fig:CCD}), in grado di rilevare segnali di bassa intensità, con un alto range dinamico e applicazioni rapide, caratteristiche che la rendono particolarmente adatta per l'imaging dinamico in vivo e in fluorescenza.\\
 La telecamera presenta un sistema di raffreddamento che permette di regolare la temperatura fino a 30°C sotto zero, così da ridurre drasticamente il rumore termico, che costituisce un grande problema per quanto riguarda il rapporto segnale-rumore nell'imaging dinamico.
 Essa è sincronizzata con le lampade di illuminazione del microscopio, con il tavolino motorizzato, con il filter cube e lo shutter. 
 Il rivelatore CCD ha una risoluzione di 1.92 megapixel e produce un output a 12 bit in livelli di grigio.
@@ -197,12 +197,6 @@ Infine, per quanto riguarda l'umidità è presente un'unità apposita, immersa n
 \end{figure}
 
 \item \textbf{Perfect Focus System (PFS)}\\
-Supponendo che tutte le condizioni ambientali esterne al campione siano ideali, l'unico disturbo alla misura è la perdita intrinseca del fuoco dovuta ai gradienti termici, vibrazioni, instabilità meccaniche e un certo numero di altri fattori difficilmente eliminabili.
-La Nikon ha affrontato questo problema progettando una soluzione hardware unica, detta ``Perfect Focus System'' (PFS), pensata per contrastare gli spostamenti assiali in tempo reale nell'arco dell'intera acquisizione \cite{Nikon2}. 
-Tale soluzione risulta molto utile specialmente negli esperimenti in cui si osservano più parti del campione, ove gli spostamenti macroscopici del tavolino motorizzato sono inevitabili.
-
-Punto critico del PFS è il rilevamento accurato di un certo piano assiale che possa essere utilizzato come riferimento per stabilire con precisione la distanza che deve intercorrere tra la superficie della lente obiettivo ed il piano focale di interesse nel campione. 
-A questo scopo il PFS utilizza un LED infrarosso a $870\ nm$ che non interferisce con i segnali raccolti dall'ottica dell'obiettivo: nè con la luce di eccitazione, né con quella emessa dai fluorofori, poiché presentano lunghezze d'onda di emissione comprese entro il range $[340\ -\ 770]\ nm$ (\figurename~\ref{fig:bande}). 
 
 \begin{figure}
  \centering
@@ -218,7 +212,12 @@ A questo scopo il PFS utilizza un LED infrarosso a $870\ nm$ che non interferisc
  \label{fig:PFSschema}
 \end{figure}
 
-Servendoci della \figurename~\ref{fig:PFSschema} ripercorriamo il percorso della luce prodotta dal LED. 
+Supponendo che tutte le condizioni ambientali esterne al campione siano ideali, l'unico disturbo alla misura è la perdita intrinseca del fuoco dovuta ai gradienti termici, vibrazioni, instabilità meccaniche e un certo numero di altri fattori difficilmente eliminabili.
+La Nikon ha affrontato questo problema progettando una soluzione hardware unica, detta ``Perfect Focus System'' (PFS), pensata per contrastare gli spostamenti assiali in tempo reale nell'arco dell'intera acquisizione \cite{Nikon2}. 
+Tale soluzione risulta molto utile specialmente negli esperimenti in cui si osservano più parti del campione, ove gli spostamenti macroscopici del tavolino motorizzato sono inevitabili.
+\\ Punto critico del PFS è il rilevamento accurato di un certo piano assiale che possa essere utilizzato come riferimento per stabilire con precisione la distanza che deve intercorrere tra la superficie della lente obiettivo ed il piano focale di interesse nel campione. 
+A questo scopo il PFS utilizza un LED infrarosso a $870\ nm$ che non interferisce con i segnali raccolti dall'ottica dell'obiettivo: nè con la luce di eccitazione, né con quella emessa dai fluorofori, poiché presentano lunghezze d'onda di emissione comprese entro il range $[340\ -\ 770]\ nm$ (\figurename~\ref{fig:bande}).
+\\ Servendoci della \figurename~\ref{fig:PFSschema} ripercorriamo il percorso della luce prodotta dal LED. 
 Innanzitutto viene fatta passare attraverso una lente condensatrice e la fenditura di una piastrina (Slit Plate).
 Una lente collimatrice converte la luce in un fascio di raggi paralleli, fatti passare poi in una maschera a mezza luna (half-moon mask), che serve per abbattere una parte dei raggi luminosi lungo l'asse ottico.
 Il fascio viene quindi trasmesso all'half-mirror, focalizzato dalle lenti del sistema di regolazione dell'offset e diretto verso un filtro anteposto all'ingresso del percorso ottico primario. 
@@ -228,9 +227,8 @@ Su tale interfaccia la luce viene nuovamente riflessa e convertita in una fascio
 Quindi lo specchio dicroico riflette ancora il fascio, permettendone il rientro nel sistema ottico del PFS.
 Passano di nuovo attraverso il filtro per la luce visibile e le lenti di regolazione dell'offset, per poi entrare nell'half-mirror e quindi nel nuovo percorso in cui si forma l'immagine di rilevamento del fuoco. 
 Qui il fascio viene ritrasformato nell'immagine della fenditura da una lente collettrice, fatto passare attraverso le lenti ritardanti, la maschera a mezza luna ed una lente cilindrica per poi arrivare nella parte centrale del sensore CCD lineare sotto forma di una linea marcata.
-
 Una componente molto importante del PFS è il sistema di lenti per la regolazione dell'offset, posta tra l'half-mirror e lo specchio dicroico.
-Esso produce uno shift della posizione a fuoco dell'immagine della fenditura, in coordinazione con un sistema elettronico di feedback che controlla la posizione assiale del tavolino motorizzato. 
+Esso produce uno shift della posizione a fuoco dell'immagine della fenditura, in coordinazione con un sistema elettronico di feedback che controlla la posizione assiale del tavolino motorizzato.
 
 \begin{figure}
  \centering
@@ -247,12 +245,10 @@ Per poter introdurre un offset tra i piani focali delle due immagini si può var
 Quando poi il sistema di feedback del PFS regola la $z$ dell'obiettivo in modo da ristabilire il piano focale A all'interfaccia coprivetrino-aria, il piano focale dell'immagine F viene spostato nella parte centrale del campione in esame (\figurename~\ref{fig:PFS}/c). 
 La distanza di offset che ora separa i due piani focali può essere regolata dall'operatore in modo da esplorare diversi piani di fuoco all'interno del campione.
 Quando l'interfaccia di riferimento si sposta lungo l'asse z l'immagine della fenditura sul rivelatore risulta shiftata e sfuocata e di conseguenza il controller del PFS sposta l'obiettivo in direzione compensatoria al movimento precedente fin quando non raggiunge nuovamente la situazione in cui l'immagine della fenditura compare al centro del sensore. 
-
-Tale sistema di controllo del fuoco presenta come vantaggio più grande il fatto di essere più veloce di ogni altro sistema esistente, in quanto il feedback viene fornito dal PFS ogni $5\ ms$ (per altri meccanismi esistenti di mantenimento del fuoco viene fornito al più ogni $500\ ms$) e la distanza tra l'obiettivo e il campione viene mantenuta costante con una precisione assiale di $0.025\ nm$. 
+\\Tale sistema di controllo del fuoco presenta come vantaggio più grande il fatto di essere più veloce di ogni altro sistema esistente, in quanto il feedback viene fornito dal PFS ogni $5\ ms$ (per altri meccanismi esistenti di mantenimento del fuoco viene fornito al più ogni $500\ ms$) e la distanza tra l'obiettivo e il campione viene mantenuta costante con una precisione assiale di $0.025\ nm$. 
 Tuttavia il PFS presenta alcuni limiti di utilizzo, legati al tipo di campione e di supporto usati. 
 Per esempio, nel caso di campioni immersi in mezzi acquosi occorre che lo spessore del mezzo sia di almeno $3\ mm$; la camera su cui sono coltivati i campioni deve avere un fondo di spessore compreso tra $150\ nm$ e $180\ nm$ per permettere una riflessione ottimale del segnale infrarosso; campioni troppo spessi o seminati su petri o vetrini di materiali diversi dal vetro, come per esempio la plastica, che presentano un forte scattering dell'infrarosso, non sono adatti per l'utilizzo del PFS. 
-
-Infine bisogna osservare che l''unità PFS Nikon è situata nel gruppo ottico di sei obiettivi, situato tra la torretta dei filtri per la fluorescenza e il tavolino del microscopio; che i suoi controlli elettronici sono anch'essi all'interno del gruppo ottico e sono autosufficienti, cioè non richiedono un software supplementare per la loro gestione e che il PFS può essere attivato o disattivato tramite una leva che inserisce o meno lo specchio dicroico nel percorso ottico primario del microscopio.
+\\Infine bisogna osservare che l''unità PFS Nikon è situata nel gruppo ottico di sei obiettivi, situato tra la torretta dei filtri per la fluorescenza e il tavolino del microscopio; che i suoi controlli elettronici sono anch'essi all'interno del gruppo ottico e sono autosufficienti, cioè non richiedono un software supplementare per la loro gestione e che il PFS può essere attivato o disattivato tramite una leva che inserisce o meno lo specchio dicroico nel percorso ottico primario del microscopio.
 
 \item \textbf{Software Nis-Element 3.1}\\
 Esso è il software attraverso cui si gestiscono le varie funzionalità del microscopio, dalla creazione di sequenze spazio-temporali di acquisizione sino all'analisi delle immagini ottenute (paragrafo 2.1.2).
@@ -383,10 +379,21 @@ Tale cerchio danneggia sia la risoluzione dell'immagine che il microcontrasto, d
 Infatti, a causa della presenza del cerchio di confusione il passaggio chiaroscuro all'interno dell'immagine non è più rappresentabile con una curva a gradino, bensì avente pendenza più o meno regolare, comportando perciò una minor definizione (o nitidezza) dell'immagine stessa.
 
 Le aberrazioni del punto possono essere di diverso tipo:
-
 \begin{itemize}
-\item \textbf{Aberrazione cromatica}\\
-Tale ``difetto'' è legato alla lunghezza d'onda della radiazione e perciò risulta assente per radiazione di tipo monocromatico. 
+ \item Aberrazione cromatica
+ 
+ \item Aberrazione sferica
+ 
+ \item Coma
+ 
+ \item Astigmatismo
+ 
+ \item Distorsione
+\end{itemize}
+
+
+\subsubsection{Aberrazione cromatica}
+L'aberrazione cromatica è legata alla lunghezza d'onda della radiazione e perciò risulta assente per radiazione di tipo monocromatico. 
 Ai fini della microscopia a fluorescenza, l'aberrazione cromatica risulta essere non trascurabile all'aumentare del numero di fluorofori differenti utilizzati all'interno del campione.
 
 Per la comprensione di tale fenomeno si supponga di utilizzare radiazione bianca per la formazione dell'immagine, così da disporre di un intero spettro continuo entro il range del visibile, ossia circa [400-800] nm. Ad ognuna delle lunghezze d'onda $\lambda$ interne a tale intervallo sarà associato un determinato indice di rifrazione $n$, secondo la legge di Cauchy \cite{nigro}:
@@ -431,8 +438,8 @@ Tale aberrazione dipende molto dalla combinazione dei sistemi ottici (obiettivo,
 Per quanto riguarda la cromatica laterale, la larghezza delle frange colorate prodotte non dipende dall'apertura del diaframma.
 Ancor più della longitudinale, questa cromatica è sensibile all'accoppiamento obiettivo-oculare, alla presenza di sistemi intermedi ed all'uso di filtri.
 
-\item \textbf{Aberrazione sferica}\\
-Si tratta di un'aberrazione del punto acromatica, ossia presente anche con radiazione monocromatica, pur essendo il suo andamento legato al valore della lunghezza d'onda in gioco.
+\subsubsection{Aberrazione sferica}
+L'aberrazione sferica è un'aberrazione del punto di tipo acromatico, ossia presente anche con radiazione monocromatica, pur essendo il suo andamento legato al valore della lunghezza d'onda in gioco.
 L'aberrazione sferica è una variazione della focale e quindi della posizione dell'immagine al variare dell'apertura. 
 
 \begin{figure}
@@ -459,7 +466,7 @@ E' proprio la caustica che rappresenta il cerchio di confusione dovuto all'aberr
 Il termine ``sferica'' si riferisce al fatto che tale aberrazione è legata alla forma sferica delle superfici delle lenti usuali e perciò si può eliminare dando forme asferiche particolari, metodo utilizzato per collettori, condensatori e certi obbiettivi fotografici, oppure combinando lenti sferiche di forma ed indice diversi, metodo utilizzato nei microscopi. 
 Un sistema corretto dall'aberrazione sferica si chiama aplanatico.
 
-\item \textbf{Coma}\\
+\subsubsection{Coma}
 La coma ha come radice etimologica i termini ``chioma'', ``cometa'', facendo riferimento al suo tipico aspetto, ancor più evidente se agente su piccoli oggetti (\figurename~\ref{fig:coma}).
 
 \begin{figure}
@@ -475,7 +482,7 @@ Di conseguenza il suo cerchio di confusione non può essere circolare ma risulta
 In microscopia la coma si corregge facilmente scegliendo in modo opportuno la posizione del diaframma e la forma delle lenti, prestando attenzione al fatto che essa è assente in un sistema simmetrico col diaframma al centro.
 Risulta ovvio che la coma in asse non può esistere, perciò se al centro del campo di un microscopio si osserva un residuo di coma in generale è indice che una o più lenti dell'obiettivo non sono centrate sull'asse comune.
 
-\item \textbf{Astigmatismo}\\
+\subsubsection{Astigmatismo}
 L'astigmatismo è un'aberrazione acromatica, extra-assiale che crea un'immagine sdoppiata e deformata di ogni punto oggetto (\figurename~\ref{fig:astigmatismo}). In tal caso, il fascio di raggi che convergono nell'immagine di un punto oggetto non si raccoglie attorno ad una zona circolare, bensì attorno ad un segmento tangenziale, detto ``focale astigmatica''.
 
 \begin{figure}
@@ -491,7 +498,7 @@ Tuttavia modificando la messa a fuoco del microscopio, si evince una grande diff
 Per la correzione di tale aberrazione bisogna tener conto che essa è influenzata, più che dalla forma delle lenti, dalla posizione del diaframma e dal numero di lenti interposte, dato che una lente divergente mostra un astigmatismo di segno opposto di una convergente, da cui l'utilità di porne varie in successione. 
 Un sistema corretto da astigmatismo si chiama genericamente ``anastigmatico''. 
 
-\item \textbf{Distorsione}\\
+\subsubsection{Distorsione}
 La distorsione consiste in una variazione dell'ingrandimento trasversale con la distanza dall'asse, per cui l'immagine di un oggetto esteso piano non gli è simile. 
 Se l'ingrandimento cresce col campo, cioè con la distanza del punto dall'asse, allora l'oggetto sembra dilatarsi verso la periferia e si parla di distorsione positiva o ``a cuscinetto''; viceversa, se l'ingrandimento diminuisce al crescere del campo allora l'oggetto sembra contrarsi e si ha la cosiddetta distorsione negativa o ``a barilotto'' (\figurename~\ref{fig:distorsione}).
 
@@ -505,8 +512,6 @@ Se l'ingrandimento cresce col campo, cioè con la distanza del punto dall'asse, 
 La distorsione di una lente sottile è in genere trascurabile, non è invece così per le lenti spesse: una lente spessa convergente tende a mostrare una distorsione positiva, se invece divergente la mostra negativa.
 Tuttavia in microscopia la distorsione disturba i fini dell'esperimento solo quando si debbono eseguire misure di superficie o di lunghezza sull'oggetto, ma in genere essa è assai contenuta ed in prevalenza data dall'oculare poichè quella dell'obbiettivo non supera in genere 1\%.
 Un sistema corretto da distorsione e curvatura di campo si dice ortoscopico.
-
-\end{itemize}
 
 
 \subsection {Cause fisiche}
@@ -557,7 +562,7 @@ Di conseguenza l'immagine ottenuta dal microscopio non è l'oggetto nella sua ra
 Lo scopo della deconvoluzione è proprio utilizzare la rielaborazione via software per invertire tale processo e ripristinare l'oggetto in esame. 
 Questo particolare algoritmo sta diventando negli ultimi anni parte integrante della microscopia digitale poiché, come si evince dalla \figurename~\ref{fig:decon}, è in grado di produrre immagini rielaborate con maggior risoluzione, miglior contrasto e rapporto segnale-rumore.
 
-\begin{figure}[!ht]
+\begin{figure}
  \centering
  \includegraphics[scale=.40]{img/CAP2decon.png}
  \caption{\small{Immagine a fluorescenza di una cellula endoteliale di bovino. La regione a sinistra mostra l'immagine originale, quella a destra il risultato di un processo iterativo di deconvoluzione bidimensionale.}}
