@@ -99,7 +99,7 @@ def analyze(imm):
     def gauss_for_curve(xy, *args):
         x, y = xy.T
         return gauss(x, y, *args)
-    parametri_0 = (800, 600, np.max(imm), 0, 800, 600, 400, 2)
+    parametri_0 = (800, 600, np.max(imm), 0, 800, 600, 0, 2)
     parametri, covar = curve_fit(gauss_for_curve, xy, z, parametri_0)
     imm_normalized = correction(imm, parametri)
     # Esclusione dei punti più intensi
