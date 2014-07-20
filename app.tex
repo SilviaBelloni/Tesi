@@ -2,4 +2,194 @@
 \chapter{Codice Sorgente} 
 \label{appendiceWSS} 
 
-Qui metto il programma.
+\lstset{language=Python, numbers=left, stepnumber=1, breaklines=true}
+
+\begin{lstlisting}
+from __future__ import division
+import pylab
+import numpy as np
+import scipy
+import scipy.ndimage as ndimage
+import scipy.ndimage.filters as filters
+import matplotlib.pyplot as plt
+import itertools
+import scipy.stats as st
+import numexpr as ne
+import PyZenity
+from pylab import *
+from scipy.optimize import curve_fit
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.stats.mstats import mquantiles
+from scipy.ndimage.filters import gaussian_filter
+from sklearn import mixture
+
+
+# DEFINIZIONE DELLE FUNZIONI ----------
+# Calcolo dell'intensita (integrale media) associata ad un massimo 
+def intensity(x, y, imm):
+    z = []    
+    delta = 5
+    for xi, yi in zip(x, y):
+        val = 0
+        count = 0
+        for i in range(-delta, delta):
+            for j in range(-delta, delta):
+                if imm[yi+i,xi+j]>0:
+                    count=count+1
+                    val = val + imm[yi+i, xi+j]
+        z.append(val/count)  
+    z = np.array(z)
+    return z
+        
+# Funzione di ricerca dei massimi 
+def find_max(imm):
+    vicinanza_size = 10
+    imm_max = filters.maximum_filter(imm, vicinanza_size)
+    maxima = (imm == imm_max)
+    imm_min = filters.minimum_filter(imm, vicinanza_size)
+    soglia = 40
+    diff = ((imm_max - imm_min) > soglia)
+    maxima[diff == 0] = 0
+    labeled, num_objects = ndimage.label(maxima)
+    slices = ndimage.find_objects(labeled)
+    margine = 50
+    x, y = [], []
+    for dy,dx in slices:
+        x_center = (dx.start + dx.stop - 1)//2
+        y_center = (dy.start + dy.stop - 1)//2 
+        if x_center<margine or x_center>imm.shape[1]-margine:
+            continue                                         
+        if y_center<margine or y_center>imm.shape[0]-margine:
+            continue
+        x.append(x_center)
+        y.append(y_center)
+    x = np.array(x)
+    y = np.array(y)
+    z = intensity(x, y, imm)
+    return x, y, z
+
+# Ricerca della funzione ''gauss'' che fitta al meglio i massimi
+def gauss(x, y, dsx, dsy, maxint, corr, cx, cy, bg, e):
+        if dsx<0:
+            return np.nan
+        if dsy<0:
+            return np.nan
+        if maxint<0:
+            return np.nan
+        if cx<0:
+            return np.nan
+        if cy<0:
+            return np.nan
+        if bg<0: 
+            return np.nan
+        if ((corr<-1) or (corr>1)):
+            return np.nan
+        if e<0:
+            return np.nan
+        varx =((x-cx)/dsx)**2
+        vary = ((y-cy)/dsy)**2
+        varxy = (corr*(x-cx)*(y-cy))/(dsy*dsx)
+        d = sqrt(varx+vary+varxy)
+        return ne.evaluate('bg + maxint * exp( -0.5 * d**e )')
+        
+# Ricerca dei parametri della curva ''gauss''
+def analyze(imm):
+    x, y, z = find_max(imm)
+    xy = array(zip(x, y))
+    def gauss_for_curve(xy, *args):
+        x, y = xy.T
+        return gauss(x, y, *args)
+    parametri_0 = (800, 600, np.max(imm), 0, 800, 600, 0, 2)
+    parametri, covar = curve_fit(gauss_for_curve, xy, z, parametri_0)
+    imm_normalized = correction(imm, parametri)
+    # Esclusione dei punti più intensi
+    quantile = mquantiles(imm_normalized[y, x], 0.95)
+    newx, newy = [], []
+    for (valore, xtemp, ytemp) in zip(imm_normalized[y, x], x, y):
+        if valore < quantile:
+            newy.append(ytemp) 
+            newx.append(xtemp)
+    newx = asarray(newx) 
+    newy = asarray(newy)
+    newz = intensity(newx, newy, imm)
+    newxy = array(zip(newx, newy))
+    newparametri, newcovar = curve_fit(gauss_for_curve, newxy, newz, parametri)
+    print newparametri
+    return newparametri
+
+# Correzione dell'immagine sulla base dei parametri della curva ''gauss''
+def correction(imm, par):
+
+    xx, yy = np.meshgrid(np.linspace(0, 1600, 1600), np.linspace(0, 1200, 1200))
+    
+    zz = gauss(xx, yy, *par)
+    
+    zz_normalized = zz / np.max(zz)
+    imm_normalized = imm/zz_normalized
+    return imm_normalized 
+# -------------------------------------
+
+
+# Fase I: EFFETTO DEI BORDI - IMMAGINE DELLE SFERETTE AD UNA SOLA INTENSITA
+# Inserimento immagine da utente
+fname_sfere = PyZenity.GetFilename()[0]
+imm = pylab.imread(fname_sfere)
+# Applicazione filtro gaussiano
+imm = gaussian_filter(imm, 2)
+# Sottrazione della prima approssimazione del background
+mode = max(scipy.stats.mode(imm)[0][0])
+imm = imm - mode
+# Identificazione dei centri delle sferette
+xi, yi, zi = find_max(imm)
+# Ricerca dei parametri della curva ''gauss''
+par = analyze(imm)
+# Autocorrezione dell'immagine delle sferette ad una sola intensita
+corretta = correction(imm, par)
+x, y, z = find_max(corretta)
+
+
+# Fase II: LINEARITA - IMMAGINE DELLE SFERETTE CON MIX DI INTENSITA
+# Inserimento immagine da utente
+fname_sferemix = PyZenity.GetFilename()[0]
+imm1 = pylab.imread(fname_sferemix)
+# Applicazione filtro gaussiano e sottrazione della prima approssimazione del background
+imm1 = gaussian_filter(imm1, 2)
+imm1 = imm1 - mode
+# Identificazione dei centri delle sferette
+x1i, y1i, z1i = find_max(imm1)
+# Correzione dell'immagine delle sferette con mix di intensita
+corretta1 = correction(imm1, par)
+x1, y1, z1 = find_max(corretta1)
+# Studio della risposta lineare con il gaussian mixture
+clf = mixture.GMM(n_components = 5, n_init = 100, init_params = '', params = 'mwc') 
+clf.weights_ = asarray([0.2]*5)
+clf.means_ = asarray((3.0, 4.0, 5.0, 6.0, 7.0)).reshape(5, 1)
+clf.covars_ = asarray([0.015]*5).reshape(5,1)
+clf.fit(log(z1))
+intnote = log([1, 3, 10, 33, 100])
+parlin = st.linregress(exp(intnote), exp(clf.means_.ravel()))
+def linreg(x, A, B):
+    return A*x+B
+x = exp(intnote)
+y = exp(clf.means_.ravel())
+erry = exp(clf.covars_.ravel())
+param0 = [parlin[0], parlin[1]]
+param, varpar = curve_fit(linreg, x, y, p0 = param0, sigma = erry)
+errpar = (diag(varpar))**(1/2)
+corretta1 = corretta1 - param[1]
+
+
+# CORREZIONE DELL'IMMAGINE DI CELLULE A FLUORESCENZA
+# Inserimento immagine da utente
+cell = PyZenity.GetFilename()[0]
+imm_cell_0 = pylab.imread(cell)
+# Applicazione filtro gaussiano e sottrazione della prima approssimazione del background
+imm_cell = gaussian_filter(imm_cell_0, 2)
+imm_cell = imm_cell - mode
+# Risposta lineare: sottrazione del parametro di background rivelato dalla fase II
+imm_cell_corr = imm_cell - param[1]
+# Effetto dei bordi: correzione tramite i parametri calcolati nella fase I
+imm_cell_corr = correction(imm_cell_corr, par)
+# Salvataggio dell'immagine delle cellule corretta
+scipy.misc.imsave('Corretta.tif', imm_cell_corr)
+\end{lstlisting}
