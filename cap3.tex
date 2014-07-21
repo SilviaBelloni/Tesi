@@ -16,7 +16,7 @@ Quest'ultimo difetto è quello che grava maggiormente su un'eventuale analisi qu
 
 \begin{figure}
  \centering
- \includegraphics[scale=.40]{img/CAP3bordi.jpg}
+ \includegraphics[scale=.50]{img/CAP3bordi.jpg}
  \caption{\small{Immagine in colorazione DAPI di cellule di lievito osservate al microscopio a fluorescenza.}}
  \label{fig:bordi}
 \end{figure}
@@ -41,8 +41,8 @@ L'algoritmo mira alla rimozione di tale difetto richiedendo l'inserimento da par
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3unaint.png}
- \caption{\small{Immagine 1600x1200 pixel a fluorescenza di sferette con intensità relativa del 10\%.}}
+ \includegraphics[scale=.60]{img/CAP3unaint.png}
+ \caption{\small{Immagine a fluorescenza (1600x1200 pixel) di sferette con intensità relativa del 10\%.}}
  \label{fig:unaint}
 \end{figure}
 
@@ -63,8 +63,8 @@ Per fare ciò ovviamente è necessario stimare il raggio \textit{delta} della sf
 
 \begin{figure}
  \centering
- \includegraphics[scale=0.50]{img/CAP3gauss.png}
- \caption{\small{In rosso sono rappresentati i massimi della \figurename~\ref{fig:unaint} ed in nero è raffigurata la superficie risultante dal fit.}}
+ \includegraphics[scale=0.45]{img/CAP3gauss.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'': in rosso sono rappresentati i massimi della \figurename~\ref{fig:unaint} ed in blu è raffigurata la superficie tridimensionale ottenuta con l'algoritmo.}}
  \label{fig:gauss}
 \end{figure}
 
@@ -79,10 +79,10 @@ I nuovi parametri ottenuti a questa seconda iterazione sono restituiti dalla fun
 Infatti a questo punto inserendo una qualsiasi immagine come variabile di ingresso della funzione \textit{correction} è possibile eliminare tale difetto sulla base dei soli parametri del fit precedentemente calcolati. 
 Tale funzione è molto semplice poiché sfrutta la normalizzazione del valore dei pixel dell'immagine sulla base del valore previsto dalla superficie tridimensionale.
 
-\begin{figure}
+\begin{figure}[h]
  \centering
- \includegraphics[scale=1]{img/CAP3unaintcorr.png}
- \caption{\small{Correzione dell'``effetto dei bordi'' sull'immagine in \figurename~\ref{fig:unaint}.}}
+ \includegraphics[scale=.60]{img/CAP3unaintcorr.png}
+ \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' sull'immagine in \figurename~\ref{fig:unaint}.}}
  \label{fig:unaintcorr}
 \end{figure}
 
@@ -94,8 +94,8 @@ La seconda immagine di calibrazione, quella delle sferette aventi differenti int
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3piuint.png}
- \caption{\small{Immagine 1600x1200 pixel a fluorescenza di sferette con cinque differenti intensità relative: 1\%, 3\%, 10\%, 30\% e 100\%.}}
+ \includegraphics[scale=.60]{img/CAP3piuint.png}
+ \caption{\small{Immagine a fluorescenza (1600x1200 pixel) di sferette con cinque differenti intensità relative: 1\%, 3\%, 10\%, 30\% e 100\%.}}
  \label{fig:piuint}
 \end{figure}
 
@@ -109,7 +109,7 @@ Tale operazione è resa possibile dalla funzione \textit{Gaussian Mixture Model 
 
 \begin{figure}
  \centering
- \includegraphics[scale=.40]{img/CAP3linearita.png}
+ \includegraphics[scale=.70]{img/CAP3linearita.png}
  \caption{\small{Grafico in scala logaritmica delle intensità previste in funzione di quelle rilevate nell'immagine riportata in \figurename~\ref{fig:piuint}.}}
  \label{fig:linearita}
 \end{figure}
@@ -126,8 +126,8 @@ L'immagine di calibrazione usata per correggere questo secondo difetto può esse
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3piuintcorr.png}
- \caption{\small{Correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:piuint}.}}
+ \includegraphics[scale=.60]{img/CAP3piuintcorr.png}
+ \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:piuint}.}}
  \label{fig:piuintcorr}
 \end{figure}
 
@@ -139,7 +139,7 @@ La parte finale del programma è volta alla correzione di entrambi i difetti, ``
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3cell.png}
+ \includegraphics[scale=.60]{img/CAP3cell.png}
  \caption{\small{Immagine a fluorescenza di fibroblasti primari.}}
  \label{fig:cell}
 \end{figure}
@@ -152,11 +152,11 @@ Difatti le viene sottratto il valore dell'ordinata all'origine calcolato tramite
 
 Successivamente viene rimosso il difetto dei bordi sfruttando la funzione \textit{correction}, ossia vengono messi in gioco i parametri calcolati tramite le sferette ad una sola intensità.
 
+Giunti a questo punto l'immagine si può ritenere corretta (\figurename~\ref{fig:cellcorr}) e di conseguenza risulta sicuramente più precisa una qualsiasi misura quantitativa eseguita su di essa.
+
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3cellcorr.png}
- \caption{\small{Correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:cell}.}}
+ \includegraphics[scale=.60]{img/CAP3cellcorr.png}
+ \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:cell}.}}
  \label{fig:cellcorr}
 \end{figure}
-
-Giunti a questo punto l'immagine si può ritenere corretta (\figurename~\ref{fig:cellcorr}) e di conseguenza risulta sicuramente più precisa una qualsiasi misura quantitativa eseguita su di essa.

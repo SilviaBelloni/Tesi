@@ -36,22 +36,22 @@ Per tale motivo le intensità rilevate nell'immagine è giusto che si estendano 
 
 \begin{figure}
  \centering
- \includegraphics[scale=.42]{img/CAP4isto1.png}
- \caption{\small{Istogrammi pre e post correzione relativi alla prima immagine di calibrazione. Sulle ordinate è riportato il numero di occorrenze, sulle ascisse l'intensità.}}
+ \includegraphics[scale=.60]{img/CAP4isto1.png}
+ \caption{\small{Istogrammi relativi alla prima immagine di calibrazione. Il grafico di colore blu è associato alla fase di pre-correzione (\figurename~\ref{fig:unaint}), mentre il verde alla fase di post-correzione (\figurename~\ref{fig:unaintcorr}).}}
  \label{fig:isto1}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.42]{img/CAP4isto2.png}
- \caption{\small{Istogrammi pre e post correzione, in scala logaritmica, relativi alla seconda immagine di calibrazione. Sulle ordinate è riportato il numero di occorrenze, sulle ascisse l'intensità.}}
+ \includegraphics[scale=.60]{img/CAP4isto2.png}
+ \caption{\small{Istogrammi in scala logaritmica relativi alla seconda immagine di calibrazione. Il grafico di colore blu è associato alla fase di pre-correzione (\figurename~\ref{fig:piuint}), mentre il verde alla fase di post-correzione (\figurename~\ref{fig:piuintcorr}).}}
  \label{fig:isto2}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.42]{img/CAP4isto3.png}
- \caption{\small{Istogrammi pre e post correzione relativi all'immagine delle cellule. Sulle ordinate è riportato il numero di occorrenze, sulle ascisse l'intensità.}}
+ \includegraphics[scale=.60]{img/CAP4isto3.png}
+ \caption{\small{Istogrammi relativi all'immagine delle cellule di fibroblasti. Il grafico di colore blu è associato alla fase di pre-correzione (\figurename~\ref{fig:cell}), mentre il verde alla fase di post-correzione (\figurename~\ref{fig:cellcorr}).}}
  \label{fig:isto3}
 \end{figure}
 
@@ -70,22 +70,23 @@ Tale funzione restituisce il p-value come semplice parametro di return e questo 
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4pvalue1.png}
- \caption{\small{Distribuzione delle intensità in funzione della distanza radiale per la prima immagine di calibrazione. Il grafico in alto è relativo alla fase di pre-correzione ed in basso alla fase di post-correzione. I valori riportati al di sopra sono i p-value corrispondenti alle rispettive regressioni lineari.}}
+ \includegraphics[scale=.55]{img/CAP4pvalue1.png}
+ \caption{\small{Distribuzione delle intensità in funzione della distanza radiale, relativa alla prima immagine di calibrazione. Il grafico di colore blu è associato alla fase di pre-correzione (\figurename~\ref{fig:unaint}), mentre il verde alla fase di post-correzione (\figurename~\ref{fig:unaintcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare.}}
  \label{fig:pvalue1}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4pvalue2.png}
- \caption{\small{Distribuzione delle intensità in funzione della distanza radiale per la seconda immagine di calibrazione. Il grafico in alto è relativo alla fase di pre-correzione ed in basso alla fase di post-correzione. I valori riportati al di sopra sono i p-value corrispondenti alle rispettive regressioni lineari.}}
+ \includegraphics[scale=.55]{img/CAP4pvalue2.png}
+ \caption{\small{Distribuzione delle intensità in funzione della distanza radiale, relativa alla seconda immagine di calibrazione. Il grafico di colore blu è associato alla fase di pre-correzione (\figurename~\ref{fig:piuint}), mentre il verde alla fase di post-correzione (\figurename~\ref{fig:piuintcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare.}}
  \label{fig:pvalue2}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4pvalue3.png}
- \caption{\small{Distribuzione delle intensità in funzione della distanza radiale per l'immagine delle cellule di fibroblasti. Il grafico in alto è relativo alla fase di pre-correzione ed in basso alla fase di post-correzione. I valori riportati al di sopra sono i p-value corrispondenti alle rispettive regressioni lineari.}}
+ \includegraphics[scale=.55]{img/CAP4pvalue3.png}
+ \caption{\small{
+ Distribuzione delle intensità in funzione della distanza radiale, relativa all'immagine delle cellule di fibroblasti. Il grafico di colore blu è associato alla fase di pre-correzione (\figurename~\ref{fig:cell}), mentre il verde alla fase di post-correzione (\figurename~\ref{fig:cellcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare.}}
  \label{fig:pvalue3}
 \end{figure}
 
@@ -102,7 +103,7 @@ In \figurename~\ref{fig:lg1} è possibile notare la sostanziale correzione del d
 \begin{figure}
  \centering
  \includegraphics[scale=.40]{img/CAP4lg1.png}
- \caption{\small{Evoluzione della prima immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza e in basso quella risultante dopo aver corretto l'``effetto dei bordi''. Per un'interpretazione più intuitiva le immagini raffigurate sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
+ \caption{\small{Evoluzione della prima immagine di calibrazione: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza e in basso quella risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
  \label{fig:lg1}
 \end{figure}
 
@@ -111,7 +112,7 @@ Nell'evoluzione dell'immagine di calibrazione delle sferette aventi cinque inten
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4lg2.png}
- \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza, al centro quella risultante dopo aver corretto l'``effetto dei bordi'' e in basso l'immagine privata del parametro costante di background. Per un'interpretazione più intuitiva le immagini raffigurate sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
+ \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella risultante dopo aver corretto l'``effetto dei bordi'' e in basso l'immagine privata del parametro costante di background. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
  \label{fig:lg2}
 \end{figure}
 
@@ -121,13 +122,13 @@ Le varie fasi correttive dell'immagini sono ben evidenti sia in (\figurename~\re
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4lg3.png}
- \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza, al centro quella risultante dopo aver corretto l'``effetto dei bordi'' e in basso l'immagine privata del parametro costante di background. Per un'interpretazione più intuitiva le immagini raffigurate sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
+ \caption{\small{Evoluzione dell'immagine delle cellule di fibroblasti: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella privata dei parametri costanti di background e in basso l'immagine risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
  \label{fig:lg3}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4cmap.png}
- \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza, al centro quella a cui sono stati sottratti i parametri costanti di background ed in basso l'immagine risultante dopo aver corretto l'ulteriore difetto della disomogeneità dell'illuminazione. Per un'interpretazione più intuitiva le immagini raffigurate sono le corrispettive immagini originali a cui è stato applicato il filtro gaussiano, rappresentate nella colour map ``gist\_ncar'', riportata a fianco.}}
+ \caption{\small{Evoluzione dell'immagine delle cellule di fibroblasti: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella privata dei parametri costanti di background e in basso l'immagine risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``gist\_ncar'' riportata a fianco, sono le corrispettive immagini originali a cui è stato applicato il filtro gaussiano.}}
  \label{fig:cmap}
 \end{figure}

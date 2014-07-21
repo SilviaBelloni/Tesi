@@ -7,6 +7,8 @@
 \begin{lstlisting}
 from __future__ import division
 import pylab
+from pylab import *
+from scipy.optimize import curve_fit
 import numpy as np
 import scipy
 import scipy.ndimage as ndimage
@@ -14,14 +16,19 @@ import scipy.ndimage.filters as filters
 import matplotlib.pyplot as plt
 import itertools
 import scipy.stats as st
-import numexpr as ne
-import PyZenity
-from pylab import *
-from scipy.optimize import curve_fit
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.stats.mstats import mquantiles
+import numexpr as ne
+import PyZenity
 from scipy.ndimage.filters import gaussian_filter
 from sklearn import mixture
+import matplotlib
+matplotlib.rc('font',**{'family':'serif','serif':['Computer Modern']})
+matplotlib.rc('text', usetex=True)
+import seaborn as sbn
+from matplotlib import rcParams
+rcParams["text.latex.unicode"]=True
+from matplotlib.colorbar import make_axes
 
 
 # DEFINIZIONE DELLE FUNZIONI ----------
