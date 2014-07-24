@@ -7,6 +7,8 @@
 \begin{lstlisting}
 from __future__ import division
 import pylab
+from pylab import *
+from scipy.optimize import curve_fit
 import numpy as np
 import scipy
 import scipy.ndimage as ndimage
@@ -14,14 +16,25 @@ import scipy.ndimage.filters as filters
 import matplotlib.pyplot as plt
 import itertools
 import scipy.stats as st
-import numexpr as ne
-import PyZenity
-from pylab import *
-from scipy.optimize import curve_fit
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.stats.mstats import mquantiles
+import numexpr as ne
+import PyZenity
 from scipy.ndimage.filters import gaussian_filter
 from sklearn import mixture
+import matplotlib
+matplotlib.rc('font',**{'family':'serif','serif':['Computer Modern']})
+matplotlib.rc('text', usetex=True)
+import seaborn as sbn
+from matplotlib import rcParams
+rcParams["text.latex.unicode"]=True
+rcParams["font.size"]=16
+rcParams["axes.titlesize"]=18
+rcParams["axes.labelsize"]=16
+rcParams["xtick.labelsize"]=16
+rcParams["ytick.labelsize"]=16
+rcParams["figure.dpi"]=80
+from matplotlib.colorbar import make_axes
 
 
 # DEFINIZIONE DELLE FUNZIONI ----------
@@ -139,13 +152,11 @@ imm = gaussian_filter(imm, 2)
 # Sottrazione della prima approssimazione del background
 mode = max(scipy.stats.mode(imm)[0][0])
 imm = imm - mode
-# Identificazione dei centri delle sferette
-xi, yi, zi = find_max(imm)
 # Ricerca dei parametri della curva ''gauss''
 par = analyze(imm)
 # Autocorrezione dell'immagine delle sferette ad una sola intensita
 corretta = correction(imm, par)
-x, y, z = find_max(corretta)
+######x, y, z = find_max(corretta)
 
 
 # Fase II: LINEARITA - IMMAGINE DELLE SFERETTE CON MIX DI INTENSITA
@@ -155,10 +166,9 @@ imm1 = pylab.imread(fname_sferemix)
 # Applicazione filtro gaussiano e sottrazione della prima approssimazione del background
 imm1 = gaussian_filter(imm1, 2)
 imm1 = imm1 - mode
-# Identificazione dei centri delle sferette
-x1i, y1i, z1i = find_max(imm1)
 # Correzione dell'immagine delle sferette con mix di intensita
 corretta1 = correction(imm1, par)
+# Identificazione dei centri delle sferette, ossia dei massimi
 x1, y1, z1 = find_max(corretta1)
 # Studio della risposta lineare con il gaussian mixture
 clf = mixture.GMM(n_components = 5, n_init = 100, init_params = '', params = 'mwc') 

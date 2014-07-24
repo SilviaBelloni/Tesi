@@ -25,7 +25,7 @@
 %\addtolength{\textheight}{1cm}
 %\setlength{\parindent}{0pt}
 %\frenchspacing
-%\linespread{1.25}
+\linespread{1.15}
 
 
 \usepackage{fancyhdr}
@@ -59,9 +59,9 @@
 
 \usepackage{atbeginend} 
 
-\AfterBegin{itemize}{\addtolength{\parskip}{- 9pt}}
-\AfterBegin{description}{\addtolength{\itemsep}{- 9pt}}
-\AfterBegin{enumerate}{\addtolength{\itemsep}{- 9pt}}
+\AfterBegin{itemize}{\addtolength{\parskip}{- 7pt}}
+%%\AfterBegin{description}{\addtolength{\itemsep}{- 9pt}}
+\AfterBegin{enumerate}{\addtolength{\itemsep}{- 7pt}}
 
 \usepackage[htt]{hyphenat}
 
@@ -79,7 +79,7 @@
 
 \dedica{Alla mia famiglia, \\ per avermi insegnato a pensare\\ e ad usare la mia testa.}
 \makededica
- \newpage
+\newpage
 
 \addtolength{\oddsidemargin}{+1,3cm} %inversione destra/sinistra tradizionale
 \addtolength{\evensidemargin}{-1,3cm} %inversione destra/sinistra tradizionale
@@ -88,8 +88,7 @@
 \addtocounter{tocdepth}{+1}	
 
 
-\chapter*{Abstract}
-\quad Qui scrivo l'abstract.
+\input{abstract}
 
 
 \tableofcontents

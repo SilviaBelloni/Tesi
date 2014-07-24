@@ -16,15 +16,15 @@ Quest'ultimo difetto è quello che grava maggiormente su un'eventuale analisi qu
 
 \begin{figure}
  \centering
- \includegraphics[scale=.40]{img/CAP3bordi.jpg}
- \caption{\small{Immagine in colorazione DAPI di cellule di lievito osservate al microscopio a fluorescenza.}}
+ \includegraphics[scale=.55]{img/CAP3bordi.jpg}
+ \caption{\small{Immagine in colorazione DAPI di cellule di lievito osservate al microscopio a fluorescenza: ben evidente la disomogeneità spaziale della luminescenza e la presenza di una luminosità residua di sfondo.}}
  \label{fig:bordi}
 \end{figure}
 
 Per poter usufruire di tale programma è necessario disporre di un set di microsfere standards di riferimento in grado di generare una serie ben definita di livelli di intensità, così da poter creare curve di calibrazione e valutare la luminosità del campione. 
 Nel nostro caso si è sfruttato il kit di microsfere fluorescenti nel rosso ``InSpeck Microscope Image Intensity Calibration'', messo a disposizione dal Dipartimento di Fisica di Bologna. 
-Esso consiste in una fiala di $5\ ml$ di mezzo di coltura e 7 fiale di microsfere di polistirene: in una non fluorescenti e nelle altre con intensità relativa di fluorescenza lungo una scala pressochè logaritmica, ossia pari a 0.3\%, 1\%, 3\%, 10\%, 30\%, 100\%.
-Tale richiesta nasce dal fatto che l'algoritmo effettua la correzione dell'immagine a fluorescenza delle cellule sfruttando l'ulteriore acquisizione di due immagini di calibrazione: una di sferette con stessa intensità e l'altra di sferette con 5 intensità differenti.
+Esso consiste in una fiala di $5\ ml$ di mezzo di coltura e 7 fiale di microsfere di polistirene aventi differenti intensità relative: 0\%, 0.3\%, 1\%, 3\%, 10\%, 30\% e 100\%.
+Tale richiesta nasce dal fatto che l'algoritmo effettua la correzione dell'immagine a fluorescenza delle cellule sfruttando l'ulteriore acquisizione di due immagini di calibrazione: una di sferette aventi stessa intensità e l'altra di sferette con 5 intensità distinte.
 
 Descriviamo dunque passo a passo le fasi principali dell'algoritmo, riportato nella sua interezza in Appendice A, che possono essere schematizzate in:
 \begin{enumerate}
@@ -38,108 +38,156 @@ Descriviamo dunque passo a passo le fasi principali dell'algoritmo, riportato ne
 
 Come precedentemente osservato, l'``effetto dei bordi'' consiste nell'ottenimento di immagini a microscopia a fluorescenza con maggior luminosità della zona centrale rispetto a quella di confine. 
 L'algoritmo mira alla rimozione di tale difetto richiedendo l'inserimento da parte dell'utente di una prima immagine di calibrazione, ossia quella delle sferette con un'unica intensità (\figurename~\ref{fig:unaint}).
+Tramite questa prima parte dell'algoritmo si riesce a eliminare in modo sostanziale la dipendenza dell'intensità dalla posizione del pixel. 
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3unaint.png}
- \caption{\small{Immagine 1600x1200 pixel a fluorescenza di sferette con intensità relativa del 10\%.}}
+ \includegraphics[scale=.64]{img/CAP3unaint.png}
+ \caption{\small{Immagine a fluorescenza (1600x1200 pixel) di sferette con intensità relativa del 10\%.}}
  \label{fig:unaint}
 \end{figure}
 
-Inizialmente il programma applica su di essa il filtro gaussiano, tipico filtro di smoothing molto efficace per attenuare il rumore presente, e calcola in un primo modo approssimato l'intensità costante residua.
+Inizialmente il programma applica sull'immagine il filtro gaussiano, tipico filtro di smoothing molto efficace per attenuare il rumore presente, e calcola in un primo modo approssimato l'intensità costante residua.
 Questo background viene valutato in modo statistico come massimo delle mode, ossia dei valori che compaiono più frequentemente, di ogni riga della matrice bidimensionale che costituisce l'immagine. 
 Una volta calcolato, tale parametro viene sottratto a quest'ultima poiché valore costante in grado di alterare considerazioni quantitative.
 
-Successivamente si cercano le coordinate dei massimi dell'immagine, identificati dai centri delle varie sferette, tramite la funzione \textit{find\_max}. 
-Essa applica filtri di massimo e minimo basandosi sulle variabili \textit{vicinanza\_size} e \textit{soglia}, il cui valore dovrà essere opportunatamente variato a seconda del campione di riferimento. 
+Successivamente l'algoritmo richiama la funzione \textit{analyze}, necessaria per trovare i parametri del fit eseguito sui massimi dell'immagine. 
+
+\subsubsection*{Ricerca dei massimi}
+
+Il primo step necessario all'interno della routine \textit{analyze} consiste nella ricerca delle coordinate dei massimi, identificati dai centri delle varie sferette, tramite la funzione \textit{find\_max}. 
+Essa applica filtri di massimo e minimo basandosi sulle variabili \textit{vicinanza\_size} e \textit{soglia}, il cui valore dovrà essere opportunamente variato a seconda del campione di riferimento. 
 La prima dà la dimensione in pixel dell'area sfruttata dai filtri per la ricerca dei massimi e dei minimi relativi, perciò dovrà assumere valori minori al crescere della concentrazione delle sferette. 
-La seconda invece entra in gioco nella determinazione vera e propria dei centri delle sferette, infatti un pixel viene riconosciuto come punto di massimo solamente se, dopo la sottrazione dei due filtri, il suo valore risulta maggiore rispetto a quello della variabile. 
-Di conseguenza tale parametro dipende dalla luminosità di sfondo: maggiore sarà il background e maggiore dovrà essere il suo valore.
-Inoltre va sottolineato il fatto che dalla ricerca dei massimi viene escluso il confine dell'immagine, utilizzando il parametro \textit{margine}. 
+La seconda invece entra in gioco nella determinazione vera e propria dei centri delle microsfere, infatti un pixel viene riconosciuto come punto di massimo solamente se, dopo la sottrazione dei due filtri, il suo valore risulta maggiore rispetto a quello della variabile. 
+Di conseguenza tale parametro dipende dalla luminosità delle sferette: maggiore sarà quest'ultima e maggiore dovrà essere il suo valore.
+
+Va inoltre sottolineato il fatto che dalla ricerca dei massimi viene escluso il confine dell'immagine, utilizzando il parametro \textit{margine}. 
 Tale scelta è stata fatta perché ogni sferetta non viene rappresentata come punto oggetto, bensì con un cerchio di confusione (capitolo 2.2.1) e di conseguenza, nel caso in cui l'alone sia a cavallo del margine dell'immagine, potrebbe venire riconosciuto come massimo un punto che in realtà non è il centro della sferetta ma un pixel della sfumatura circostante.
+
 Sempre all'interno di \textit{find\_max} viene associata ad ogni punto di massimo un'intensità integrale media. 
 Questa viene calcolata richiamando la funzione \textit{intensity}, la quale somma i valori dei pixel che costituiscono la sferetta e divide il tutto per il numero totale di pixel contati, così da tener conto del fatto che non si tratta di un punto oggetto privo di dimensioni, bensì di un'area con una certa estensione. 
-Per fare ciò ovviamente è necessario stimare il raggio \textit{delta} della sferetta, nel nostro caso corrispondente a 5 pixel.
+Per fare ciò ovviamente è necessario valutare il raggio \textit{delta} della sferetta, nel nostro caso stimato pari a 5 pixel (\figurename~\ref{fig:unaint}).
 
 \begin{figure}
  \centering
- \includegraphics[scale=0.50]{img/CAP3gauss.png}
- \caption{\small{In rosso sono rappresentati i massimi della \figurename~\ref{fig:unaint} ed in nero è raffigurata la superficie risultante dal fit.}}
+ \includegraphics[scale=.70]{img/CAP3punto.png}
+ \caption{\small{Selezione di una singola sferetta del kit ``InSpeck Microscope Image Intensity Calibration'' per la valutazione della dimensione associata.}}
+ \label{fig:punto}
+\end{figure}
+
+\subsubsection*{Fit di maximum likelihood}
+
+A questo punto, avendo identificato i massimi dell'immagine, la funzione \textit{analyze} esegue su di essi il ``fit di maximum likelihood'', tramite l'utilizzo del metodo preimpostato \textit{curve\_fit}.
+
+Per poter comprendere come venga eseguita questa tipologia di fit, prendiamo un campione casuale $\mathbf{X_n}$ di $n$ osservazioni che può assumere diversi valori, ciascuno dei quali costituisce un campione osservato $\mathbf{x_n}$.
+Venga inoltre definito un modello statistico per il campione $\mathbf{X_n}$, ossia una distribuzione $f_n (\mathbf{x_n};\theta)$ con $\theta \in \Theta$ parametro (o insieme di parametri) che identifica la legge di probabilità relativa all'esperimento in corso.
+Sulla base di tali identificazioni si definisce ``funzione di verosimiglianza'' (likelihood function)
+associata ad $\mathbf{x_{oss}}$ la funzione $L_{x_{oss}}: \Theta\longmapsto \Re_+$ tale che:
+$$L_{x_{oss}}(\theta)=f_n (\mathbf{x_{oss}};\theta)=\prod_{i=1}^n f_X (x^{oss}_i;\theta) $$
+dove $\mathbf{x_{oss}}=(x^{oss}_1, x^{oss}_2, ..., x^{oss}_n)$ è il campione osservato. 
+La likelihood function è utilizzata solitamente per condurre tre tradizionali procedure:
+\begin{itemize}
+ \item ottenere una stima puntuale di $\theta$,
+ \item ottenere una stima per intervallo di $\theta$,
+ \item scegliere tra due possibili ipotesi riguardanti valori di $\theta$.
+\end{itemize}
+Il fit di maximum likelihood, utile ai fini dell'algoritmo, è volto ad ottenere la stima puntuale, detta anche ``stima di massima verosimiglianza'' (MLE). Con tale termine si indica il valore $\hat{\theta}$ in cui la funzione di verosimiglianza raggiunge il massimo assoluto, ossia:
+$$MLE = \hat{\theta}\ se\ L_{x_{oss}}(\hat{\theta})=\max_{\theta \in \Theta} L_{x_{oss}}(\theta)$$
+Detto in altri termini, il punto di massimo della funzione di verosimiglianza è il valore più plausibile di $\theta$ alla luce del campione osservato $x_{oss}$.
+
+Dopo varie analisi si è notato che la funzione che al meglio descrive il comportamento dei massimi di intensità è una funzione di tipo esponenziale, simile ad una gaussiana, descritta all'interno della funzione \textit{gauss} tramite la relazione:
+$$ G = bg + maxint \cdot \exp \{ {-\frac{1}{2} [{     (\frac{x-cx}{dsx})^2   +  (\frac{y-cy}{dsy})^2  +  \frac{corr \cdot (x-cx) \cdot (y-cy)}{dsx \cdot dsy} ]}^{\frac{e}{2}}}\} $$
+dove $bg$ è il parametro di background, $maxint$ è l'intensità massima, $cx$ e $cy$ sono rispettivamente i centri delle coordinate x e y, $dsx$ e $dsy$ sono rispettivamente le deviazioni standard delle coordinate x e y, $corr$ è il parametro di correlazione tra x ed y ed infine $e$ è l'esponente.
+Facendo riferimento alla trattazione precedente $G$ corrisponde alla funzione di verosimiglianza $L_{x_{oss}}(\theta)$, ove $\theta$ in tal caso è l'insieme dei parametri $(bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr,\ e)$.
+Essendo questo uno dei punti cardine della correzione, si è deciso di parallelizzare la funzione \textit{gauss}, così da avere un guadagno nei tempi e nell'affaticamento dei core di almeno quattro volte.
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.45]{img/CAP3gauss.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'': i puntini rappresentano i massimi della \figurename~\ref{fig:unaint} mentre la superficie è quella risultante dal fit di maximum likelihood.}}
  \label{fig:gauss}
 \end{figure}
 
-Il passo successivo sta nell'utilizzo della funzione \textit{analyze} per il fit dei punti di massimo. 
-Dopo varie analisi si è notato che la funzione che al meglio descrive il comportamento dei massimi di intensità è una funzione di tipo esponenziale, simile ad una gaussiana, descritta dal valore di return della funzione \textit{gauss}. 
-Essendo questa uno dei punti cardine della correzione, si è deciso di parallelizzarla, così da avere un guadagno nei tempi e nell'affaticamento dei core di almeno quattro volte.
-Una volta ottenuti i parametri della funzione ciò che si viene a creare è una superficie tridimensionale con forma analoga a quella riportata in \figurename~\ref{fig:gauss}. 
+Una volta ottenuta la stima di massima verosimiglianza, ossia il set di parametri in grado di massimizzare la likelihood function, ciò che si viene a creare è una superficie tridimensionale con forma analoga a quella riportata in \figurename~\ref{fig:gauss}. 
 Quest'ultima immagine mette bene in evidenza il fatto che alcuni punti di massimo corrispondono ad intensità molto elevate rispetto alla media, pur trattandosi di sferette con medesima intensità relativa.
 Questo fenomeno è da associarsi alla possibilità che due sferette possano trovarsi così vicine da apparire sovrapposte ed essendo questa un'alterazione dei risultati è necessario rieseguire il calcolo dei parametri dopo aver eliminato tali punti più intensi. 
 Per fare ciò viene utilizzato il quantile$_{0.95}$, ossia vengono eliminati dal nuovo fit quei pixel con intensità superiore ad esso, pari per definizione al 5\% dei massimi inizialmente rilevati.
 I nuovi parametri ottenuti a questa seconda iterazione sono restituiti dalla funzione \textit{analyze} e risultano essere la chiave per la correzione dell'``effetto dei bordi'' di una qualunque immagine a fluorescenza, anche la stessa di calibrazione (\figurename~\ref{fig:unaintcorr}).
-Infatti a questo punto inserendo una qualsiasi immagine come variabile di ingresso della funzione \textit{correction} è possibile eliminare tale difetto sulla base dei soli parametri del fit precedentemente calcolati. 
+Infatti a questo punto inserendo una qualsiasi immagine come variabile di ingresso della funzione \textit{correction} è possibile eliminare tale difetto sfruttando unicamente la stima di massima verosimiglianza precedentemente calcolata. 
 Tale funzione è molto semplice poiché sfrutta la normalizzazione del valore dei pixel dell'immagine sulla base del valore previsto dalla superficie tridimensionale.
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3unaintcorr.png}
- \caption{\small{Correzione dell'``effetto dei bordi'' sull'immagine in \figurename~\ref{fig:unaint}.}}
+ \includegraphics[scale=.64]{img/CAP3unaintcorr.png}
+ \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' sull'immagine in \figurename~\ref{fig:unaint}.}}
  \label{fig:unaintcorr}
 \end{figure}
 
-Tramite questa prima fase, che sfrutta la sola immagine di calibrazione di sferette con stessa intensità, si riesce quindi a eliminare in modo sostanziale ogni tipo di dipendenza dell'intensità dalla posizione del pixel. 
+
 
 \section{Rimozione della fluorescenza di background}
 
-La seconda immagine di calibrazione, quella delle sferette aventi differenti intensità (\figurename~\ref{fig:piuint}), viene sfruttata per correggere il problema della fluorescenza residua di sfondo, tramite il controllo della risposta lineare dello strumento. 
+La seconda immagine di calibrazione, costituita da sferette aventi differenti intensità (\figurename~\ref{fig:piuint}), viene sfruttata per correggere il problema della fluorescenza residua di sfondo, tramite il controllo della risposta lineare dello strumento. 
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3piuint.png}
- \caption{\small{Immagine 1600x1200 pixel a fluorescenza di sferette con cinque differenti intensità relative: 1\%, 3\%, 10\%, 30\% e 100\%.}}
+ \includegraphics[scale=.64]{img/CAP3piuint.png}
+ \caption{\small{Immagine a fluorescenza (1600x1200 pixel) di sferette con cinque differenti intensità relative: 1\%, 3\%, 10\%, 30\% e 100\%.}}
  \label{fig:piuint}
 \end{figure}
 
-Nuovamente all'utente viene richiesto di inserire l'immagine e a questa, come per la precedente, viene inizialmente applicato il filtro gaussiano e sottratto il parametro approssimato del background. 
-
+Come nella prima fase dell'algoritmo, all'utente viene richiesto di inserire l'immagine, così da applicare il filtro gaussiano e sottrarre il parametro approssimato del background. 
 Successivamente, sulla base dei parametri del fit calcolati tramite la prima immagine di calibrazione viene corretto il difetto dei bordi.
 
 A questo punto ai fini del controllo della risposta lineare del microscopio,  nell'immagine vengono riconosciute le curve gaussiane relative alle differenti intensità. 
 Per esempio nel nostro caso sono stati inseriti nel campione cinque diversi tipi di sferette, escludendo quelle con intensità relativa del 0.3\% poiché poco intensa, e di conseguenza vengono riconosciute cinque distinte curve gaussiane.
-Tale operazione è resa possibile dalla funzione \textit{Gaussian Mixture Model (GMM)}, la quale permette l'identificazione all'interno di un campione di dati di una serie di curve gaussiane e la valutazione dei parametri associati (es. popolazione, valore medio e covarianza della curva).
+Tale operazione è resa possibile dalla funzione \textit{Gaussian Mixture Model (GMM)}, la quale permette l'identificazione all'interno di un campione di dati di una serie di curve gaussiane e la valutazione dei parametri associati, come ad esempio: popolazione, valore medio e covarianza della curva (\figurename~\ref{fig:istogauss}).
+
 
 \begin{figure}
  \centering
- \includegraphics[scale=.40]{img/CAP3linearita.png}
- \caption{\small{Grafico in scala logaritmica delle intensità previste in funzione di quelle rilevate nell'immagine riportata in \figurename~\ref{fig:piuint}.}}
+ \includegraphics[scale=.60]{img/CAP3istogauss.png}
+ \caption{\small{Istogramma delle cinque curve gaussiane corrispondenti alle intensità dei massimi presenti nella seconda immagine di calibrazione, una volta corretta dall'``effetto dei bordi''. La linea marcata e l'area sfumata presenti su ogni curva rappresentano rispettivamente il valore medio e la deviazione standard della gaussiana identificati dalla GMM.}}
+ \label{fig:istogauss}
+\end{figure}
+
+I valori medi delle gaussiane rappresentano le intensità medie di ciascuna categoria di sferette e di conseguenza, essendo queste comunque note a priori, è possibile creare una regressione lineare tra le intensità previste e quelle effettivamente rilevate all'interno del campione, così da controllare la linearità della risposta e correggere di conseguenza il parametro di background. 
+Un primo fit lineare è stato fatto sfruttando la funzione \textit{linregress}, la quale restituisce un array contenente in particolare la slope e l'intercetta della curva di fit e la correlazione esistente tra i due set di dati in esame.
+Come si evince dalla \figurename~\ref{fig:linearita}, la relazione tra intensità rilevate e note sembra non essere perfettamente lineare. Infatti il grafico in scala logaritmica presenta una slope non identicamente unitaria, pari a 0.87, e quello in scala lineare mostra una leggera curvatura dell'andamento dei dati. 
+Inoltre le incertezze associate ai dati in esame, sebbene riportate nel grafico, risultano impercettibili, ulteriore indice del fatto che difficilmente si tratta di una pura dipendenza lineare. 
+Ad ogni modo la discrepanza risulta essere non troppo evidente e trattabile con una trasformazione quadratica dell'intensità dell'immagine; per tale motivo, in prima approssimazione, l'algoritmo assume un andamento non quadratico e considera perciò verificata la risposta lineare del microscopio. 
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.55]{img/CAP3linearita.png}
+ \caption{\small{Grafico con incertezze (non percettibili) delle intensità medie delle cinque gaussiane corrispondenti ai massimi della seconda immagine di calibrazione corretta dall'``effetto dei bordi'' in funzione di quelle note ed associate rette di regressione lineare. Sulla sinistra è riportato il grafico in scala logaritmica, mentre sulla destra in scala lineare.}}
  \label{fig:linearita}
 \end{figure}
 
-I valori medi delle gaussiane rappresentano le intensità medie di ciascuna categoria di sferette e di conseguenza, essendo queste comunque note a priori, è possibile creare una regressione lineare tra le intensità previste e quelle effettivamente rilevate all'interno del campione, così da verificare la linearità della risposta e correggere di conseguenza il parametro di background. 
-Puntualizziamo che l'algoritmo lavora con i logaritmi delle intensità, poiché come precedentemente osservato la scala di intensità delle sferette è appositamente creata in modo da essere logaritmica.
-Un primo fit lineare è stato fatto sfruttando la funzione \textit{linregress}, la quale resistuisce un array contenente in particolare la slope e l'intercetta della curva di fit e la correlazione esistente tra i due set di dati in esame: intensità previste e rilevate.
-Da tutte le varie analisi eseguite quest'ultimo parametro di correlazione risultava pressoché pari ad 1 (es. 0.996296), indice del fatto che i punti stanno con ottima approssimazione su una retta e quindi che i dati associati godono di una relazione lineare, conclusione traibile anche dalla \figurename~\ref{fig:linearita}.
-Tale osservazione è fondamentale poiché esclude eventuali correzioni alla risposta non lineare dello strumento, lasciando come unico obiettivo rimasto la rimozione del valore costante della fluorescenza di sfondo. 
-Per fare ciò basta imporre il passaggio della retta di regressione dall'origine, ossia a livello pratico è necessario sottrarre all'immagine l'intercetta calcolata. 
-Essendo questo un altro cardine dell'algoritmo, si è scelto di rivalutare l'intercetta all'origine in modo più preciso, ossia tramite un secondo fit lineare eseguito con un'apposita funzione di \textit{curve\_fit}.
-A questo punto per la rimozione della fluorescenza di background basterà semplicemente sottrarre il parametro dell'ordinata all'origine trovato all'intera immagine presa in considerazione. 
-L'immagine di calibrazione usata per correggere questo secondo difetto può essere a sua volta autocorretta, come mostrato in \figurename~\ref{fig:piuintcorr}.
 
-\begin{figure}
+\begin{figure}[p]
  \centering
- \includegraphics[scale=1]{img/CAP3piuintcorr.png}
- \caption{\small{Correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:piuint}.}}
+ \includegraphics[scale=.64]{img/CAP3piuintcorr.png}
+ \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:piuint}.}}
  \label{fig:piuintcorr}
 \end{figure}
 
-Tramite questa seconda fase, che sfrutta l'immagine di calibrazione di sferette con differenti intensità ed i parametri della superficie tridimensionale ottenuti nella prima fase, si riesce quindi a eliminare in modo sostanziale l'ulteriore difetto causato dalla fluorescenza residua. 
+Sulla base di tale ipotesi l'unico obiettivo rimasto risulta essere la rimozione del valore costante della fluorescenza di sfondo. 
+Per fare ciò basta imporre il passaggio della retta di regressione dall'origine, ossia a livello pratico è necessario sottrarre all'immagine l'intercetta calcolata. 
+Essendo questo un altro cardine dell'algoritmo, si è scelto di rivalutare l'intercetta all'origine in modo più preciso, ossia tramite un secondo fit lineare eseguito con un'apposita funzione di \textit{curve\_fit}.
+A questo punto per la rimozione della fluorescenza di background basterà semplicemente sottrarre il parametro dell'ordinata all'origine all'intera immagine presa in considerazione. 
+L'immagine di calibrazione usata per correggere questo secondo difetto può essere a sua volta autocorretta, come mostrato in \figurename~\ref{fig:piuintcorr}.
+
+Tramite questa seconda fase, che sfrutta l'immagine di calibrazione di sferette con differenti intensità e i parametri del fit di maximum likelihood ottenuti nella prima fase, si riesce quindi a eliminare in modo sostanziale l'ulteriore difetto della fluorescenza residua. 
+
 
 \section{Correzione dell'immagine}
 
 La parte finale del programma è volta alla correzione di entrambi i difetti, ``effetto dei bordi'' e fluorescenza residua, per una qualsiasi immagine acquisita con il microscopio a fluorescenza (\figurename~\ref{fig:cell}). 
 
-\begin{figure}
+\begin{figure}[p]
  \centering
- \includegraphics[scale=1]{img/CAP3cell.png}
+ \includegraphics[scale=.64]{img/CAP3cell.png}
  \caption{\small{Immagine a fluorescenza di fibroblasti primari.}}
  \label{fig:cell}
 \end{figure}
@@ -148,15 +196,15 @@ A questo punto l'algoritmo richiede da parte dell'utente l'inserimento di una te
 Ad essa, come per le precedenti, viene inizialmente applicato il filtro gaussiano e sottratto il valore approssimato di background.
 
 La prima correzione ad essere effettuata sull'immagine è la rimozione della fluorescenza residua di sfondo. 
-Difatti le viene sottratto il valore dell'ordinata all'origine calcolato tramite la seconda immagine di calibrazione,  quella contenente il mixture di sferette.
+Difatti le viene sottratto il valore dell'ordinata all'origine calcolato tramite la seconda immagine di calibrazione, contenente il mixture di sferette.
 
-Successivamente viene rimosso il difetto dei bordi sfruttando la funzione \textit{correction}, ossia vengono messi in gioco i parametri calcolati tramite le sferette ad una sola intensità.
+Successivamente viene rimosso il difetto dei bordi sfruttando la funzione \textit{correction}, ossia vengono messi in gioco i parametri calcolati dal fit di maximum likelihood tramite le sferette ad una sola intensità.
+
+Giunti a questo punto l'immagine si può ritenere corretta (\figurename~\ref{fig:cellcorr}) e di conseguenza risulta sicuramente più precisa una qualsiasi misura quantitativa eseguita su di essa.
 
 \begin{figure}
  \centering
- \includegraphics[scale=1]{img/CAP3cellcorr.png}
- \caption{\small{Correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:cell}.}}
+ \includegraphics[scale=.64]{img/CAP3cellcorr.png}
+ \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' e della fluorescenza di background sull'immagine in \figurename~\ref{fig:cell}.}}
  \label{fig:cellcorr}
 \end{figure}
-
-Giunti a questo punto l'immagine si può ritenere corretta (\figurename~\ref{fig:cellcorr}) e di conseguenza risulta sicuramente più precisa una qualsiasi misura quantitativa eseguita su di essa.

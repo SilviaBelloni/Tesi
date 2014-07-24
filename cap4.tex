@@ -6,15 +6,17 @@
 - Nassim Nicholas Taleb -\\
 \end{small}\end{flushright}
 
-Lo sviluppo e la convalida dell'algoritmo sono stati permessi dall'applicazione di quest'ultimo ad apposite immagini in fluorescenza rossa di sferette di calibrazione e di cellule di fibroblasti.
+Lo sviluppo e la convalida dell'algoritmo sono stati permessi grazie all'utilizzo di quest'ultimo per la correzione di immagini in fluorescenza rossa di cellule di fibroblasti, sfruttando apposite immagini di calibrazione di sferette, anch'esse fluorescenti nel rosso.
 
-Le immagini di riferimento, utilizzate nella prima e nella seconda fase del programma, sono state acquisite in otto pozzetti di una multiwell: due con sferette ad intensità relativa del 100\% e due del 10\%, una con una mixture di cinque intensità (1\%, 3\%, 10\%, 30\% e 100\%) ed una con quattro intensità, infine nelle rimanenti è stato posto unicamente il mezzo di coltura, così da studiare la fluorescenza di background indotta dalla sorgente.
-Il riempimento di ogni pozzetto ha previsto l'agitazione sia manuale che con sonificatore delle sferette e l'iniezione con le pipette ghilson di $220\ \mu l$ di terreno completo e di sferette di calibrazione: $10\ \mu l$ per i quattro pozzetti ad intensità unica, $2\ \mu l$ e $2.5\ \mu l$ rispettivamente per quello con cinque e quattro intensità.
+Le immagini di riferimento, utilizzate nella prima e nella seconda fase del programma, sono state acquisite in otto pozzetti di una multiwell: due con sferette ad intensità relativa del 100\% e due del 10\%, due con una mixture di cinque intensità (1\%, 3\%, 10\%, 30\% e 100\%) ed infine nelle rimanenti è stato posto unicamente il mezzo di coltura, così da studiare la fluorescenza di background indotta dalla sorgente.
+Il riempimento di ogni pozzetto ha previsto l'agitazione sia manuale che con sonificatore delle sferette e l'iniezione con le pipette ghilson di $220\ \mu l$ di terreno completo e delle sferette di calibrazione: $10\ \mu l$ per i quattro pozzetti ad intensità unica e $2\ \mu l$ per i due pozzetti a cinque intensità.
+Tuttavia una delle due immagini con sferette aventi differente luminosità ha mostrato un'errata composizione del campione e perciò ai fini dell'elaborazione dati se ne è sfruttata una sola di queste.
 
-L'analisi che segue mostra grafici e risultati dell'algoritmo applicato all'immagine dei fibroblasti, corretta tramite una prima immagine di calibrazione costituita da un campione di sferette con intensità relativa del 10\% ed una seconda contenente cinque intensità differenti. 
-L'attenzione viene posta in particolare sull'efficacia dell'algoritmo nella rimozione dell'``effetto dei bordi'', poiché come visto in precedenza il difetto della fluorescenza di sfondo viene semplicemente eliminato sottraendo il parametro costante identificato nella seconda fase.
+L'analisi che segue pone in particolare l'attenzione sull'efficacia dell'algoritmo nella rimozione dell'``effetto dei bordi'' poiché, come visto in precedenza, il difetto della fluorescenza di sfondo viene semplicemente eliminato sottraendo il parametro costante identificato nella seconda fase.
 
-I buoni risultati conseguiti dall'algoritmo possono essere percepiti dall'osservazione degli istogrammi delle distribuzioni di intensità, dal cambiamento sostanziale del p-value associato alla dipendenza spaziale della luminescenza rilevata ed infine dall'analisi qualitativa dell'evoluzione delle immagini nelle varie fasi dell'elaborazione.
+Tale capitolo si propone di esporre e commentare i risultati conseguiti dall'algoritmo, i quali possono essere raccolti da differenti analisi: l'osservazione degli istogrammi delle distribuzioni di intensità, il cambiamento sostanziale del p-value associato alla dipendenza spaziale della luminescenza e la semplice analisi qualitativa dell'evoluzione delle immagini durante le varie fasi di correzione.
+Queste tre rielaborazioni verranno affrontate sulla base di grafici e risultati ottenuti applicando l'algoritmo sull'immagine dei fibroblasti, nel particolar caso in cui la prima immagine di calibrazione sia costituita da un campione di sferette con intensità relativa del 10\%.
+Successivamente, per poter avere una miglior valutazione dell'efficacia del programma, verrà eseguito un confronto tra i risultati ottenuti utilizzando nella prima fase dell'algoritmo quattro distinte immagini di calibrazione, acquisite col microscopio a fluorescenza.
 
 Osserviamo inoltre che prima di giungere ai risultati finali di seguito riportati l'algoritmo è stato via via migliorato: ad esempio, si è constatato che la curva in grado di fittare al meglio i centri di sferette nella prima fase dell'algoritmo fosse, anziché una polinomiale, una curva di tipo esponenziale, che l'intensità da associare ad ogni punto di massimo fosse meglio interpretarla come intensità integrale media piuttosto che puntuale ed inoltre sono stati ricavati ed inseriti i valori ottimali dei parametri utilizzati nei vari passaggi di elaborazione dell'immagine.
 
@@ -30,28 +32,28 @@ Tale risultato è proprio ciò a cui si mirava, dato che le sferette contenute n
 
 Anche in \figurename~\ref{fig:isto2} si nota un netto miglioramento, infatti le cinque gaussiane associate ai differenti valori di intensità relativa delle sferette mostrano a posteriori dell'elaborazione un'apertura, ossia una covarianza, molto minore ed una miglior definizione dei confini tra l'una e l'altra. 
 
-D'altra parte, gli istogrammi associati all'immagine volta a correzione, ovvero quella delle cellule, non presentano sostanziali cambiamenti, a meno di una migliore simmetria della distribuzione delle intensità presenti nell'immagine.
+D'altra parte, gli istogrammi associati all'immagine volta a correzione (\figurename~\ref{fig:isto3}), ovvero quella delle cellule, non presentano sostanziali cambiamenti, a meno di una migliore simmetria della distribuzione delle intensità presenti nell'immagine.
 Tale risultato era in realtà prevedibile, dato che in tal caso non si tratta più di un'immagine di calibrazione, quindi creata per poter mostrare determinate proprietà luminescenti, bensì di un'immagine reale e di natura biologica. 
 Per tale motivo le intensità rilevate nell'immagine è giusto che si estendano entro un range abbastanza ampio, proprio perché a seconda della concentrazione delle probes fluorescenti nella cellula sarà differente il grado di luminosità sviluppato.
 
 \begin{figure}
  \centering
- \includegraphics[scale=.42]{img/CAP4isto1.png}
- \caption{\small{Istogrammi pre e post correzione relativi alla prima immagine di calibrazione. Sulle ordinate è riportato il numero di occorrenze, sulle ascisse l'intensità.}}
+ \includegraphics[scale=.55]{img/CAP4isto1.png}
+ \caption{\small{Istogrammi relativi alle intensità dei massimi della prima immagine di calibrazione, costituita da sferette con stessa intensità. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:unaint}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:unaintcorr}). Come previsto, l'algoritmo di correzione fa sì che le intensità risultino molto più piccate attorno un unico valore.}}
  \label{fig:isto1}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.42]{img/CAP4isto2.png}
- \caption{\small{Istogrammi pre e post correzione, in scala logaritmica, relativi alla seconda immagine di calibrazione. Sulle ordinate è riportato il numero di occorrenze, sulle ascisse l'intensità.}}
+ \includegraphics[scale=.55]{img/CAP4isto2.png}
+ \caption{\small{Istogrammi relativi alle intensità dei massimi della seconda immagine di calibrazione, costituita da sferette con cinque intensità differenti. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:piuint}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:piuintcorr}). Come previsto, l'algoritmo di correzione fa sì che le intensità risultino molto più piccate attorno ai cinque valori medi delle gaussiane, rendendo queste molto più definite.}}
  \label{fig:isto2}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.42]{img/CAP4isto3.png}
- \caption{\small{Istogrammi pre e post correzione relativi all'immagine delle cellule. Sulle ordinate è riportato il numero di occorrenze, sulle ascisse l'intensità.}}
+ \includegraphics[scale=.55]{img/CAP4isto3.png}
+ \caption{\small{Istogrammi relativi alle intensità dei massimi dell'immagine delle cellule di fibroblasti. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:cell}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:cellcorr}). Come previsto, l'algoritmo di correzione determina una miglior simmetria della distribuzione di intensità.}}
  \label{fig:isto3}
 \end{figure}
 
@@ -66,68 +68,195 @@ Di conseguenza il p-value esprime quanto sia plausibile che i dati osservati si 
 Come precedentemente osservato, l'``effetto dei bordi'' comporta l'instaurarsi di una dipendenza dell'intensità del pixel dalla posizione di quest'ultimo: è proprio la ``forza'' di questa relazione funzionale che può essere misurata tramite il valore del p-value.
 A tal proposito è stata valutata per ogni punto di massimo dell'immagine (centro delle sferette per le immagini di calibrazione e nuclei delle cellule per l'immagine da correggere) la distanza dall'origine, intesa come punto centrale dell'immagine stessa, così da ottenere un set di dati costituito da una sorta di distanze radiali. 
 Per ottenere il valore del p-value si è quindi sfruttata la funzione \textit{linregress}, in grado di valutare la relazione lineare esistente o meno tra le intensità dei punti di massimo e le distanze radiali associate.
-Tale funzione restituisce il p-value come semplice parametro di return e questo viene valutato prendendo come ipotesi nulla $H_0$ il fatto che la slope sia nulla, quindi maggiore sarà il p-value maggiore e più corretto sarà assumere l'assenza di una dipendenza spaziale dell'intensità.
+Tale funzione restituisce il p-value come semplice parametro di return e questo viene valutato prendendo come ipotesi nulla $H_0$ il fatto che la slope sia nulla, quindi maggiore sarà il p-value e più plausibile sarà assumere l'assenza di una dipendenza spaziale dell'intensità.
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4pvalue1.png}
- \caption{\small{Distribuzione delle intensità in funzione della distanza radiale per la prima immagine di calibrazione. Il grafico in alto è relativo alla fase di pre-correzione ed in basso alla fase di post-correzione. I valori riportati al di sopra sono i p-value corrispondenti alle rispettive regressioni lineari.}}
+ \includegraphics[scale=.55]{img/CAP4pvalue1.png}
+ \caption{\small{Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa alla prima immagine di calibrazione. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:unaint}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:unaintcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
  \label{fig:pvalue1}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4pvalue2.png}
- \caption{\small{Distribuzione delle intensità in funzione della distanza radiale per la seconda immagine di calibrazione. Il grafico in alto è relativo alla fase di pre-correzione ed in basso alla fase di post-correzione. I valori riportati al di sopra sono i p-value corrispondenti alle rispettive regressioni lineari.}}
+ \includegraphics[scale=.55]{img/CAP4pvalue2.png}
+ \caption{\small{Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa alla seconda immagine di calibrazione. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:piuint}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:piuintcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
  \label{fig:pvalue2}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4pvalue3.png}
- \caption{\small{Distribuzione delle intensità in funzione della distanza radiale per l'immagine delle cellule di fibroblasti. Il grafico in alto è relativo alla fase di pre-correzione ed in basso alla fase di post-correzione. I valori riportati al di sopra sono i p-value corrispondenti alle rispettive regressioni lineari.}}
+ \includegraphics[scale=.55]{img/CAP4pvalue3.png}
+ \caption{\small{
+ Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa all'immagine delle cellule di fibroblasti. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:cell}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:cellcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
  \label{fig:pvalue3}
 \end{figure}
 
-Come si evince dalle Figure \ref{fig:pvalue1}, \ref{fig:pvalue2}, \ref{fig:pvalue3}, il p-value viene altamente modificato dall'algoritmo e fatto crescere verso valori sempre più prossimi ad uno, comportando quindi una notevole diminuzione della correlazione esistente tra intensità e distanza radiale, sia nelle immagini di calibrazione che nell'immagine dei fibroblasti. 
-Sulla base di tale analisi, dopo aver corretto l'immagine la dipendenza spaziale dell'intensità, inizialmente presente a causa della disomogeneità dell'illuminazione creata dalla sorgente, può essere considerata sostanzialmente non significativa.
+Come si evince dalle Figure \ref{fig:pvalue1}, \ref{fig:pvalue2}, \ref{fig:pvalue3}, il p-value viene altamente modificato dall'algoritmo e fatto crescere verso valori sempre più prossimi ad uno, comportando quindi una npiù piccola possibilità di correlazione esistente tra intensità e distanza radiale, sia nelle immagini di calibrazione che nell'immagine dei fibroblasti. 
+Perciò, sulla base di tale analisi, dopo aver corretto l'immagine la dipendenza spaziale dell'intensità, inizialmente presente a causa della disomogeneità dell'illuminazione creata dalla sorgente, può essere considerata sostanzialmente non significativa.
 
 
-\section{Analisi qualitativa}
+\section{Analisi qualitativa delle immagini}
 
 Anche dalla semplice osservazione delle immagini è possibile notare i cambiamenti apportati dall'algoritmo.
-
-In \figurename~\ref{fig:lg1} è possibile notare la sostanziale correzione del difetto della luminosità disomogenea: le sferette aventi stessa intensità, originariamente percepite con differente luminosità, vengono rappresentate dopo la correzione con una medesima tonalità di colore, mostrando così la realtà del campione.
 
 \begin{figure}
  \centering
  \includegraphics[scale=.40]{img/CAP4lg1.png}
- \caption{\small{Evoluzione della prima immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza e in basso quella risultante dopo aver corretto l'``effetto dei bordi''. Per un'interpretazione più intuitiva le immagini raffigurate sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
+ \caption{\small{Evoluzione della prima immagine di calibrazione: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza e in basso quella risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
  \label{fig:lg1}
 \end{figure}
 
-Nell'evoluzione dell'immagine di calibrazione delle sferette aventi cinque intensità differenti (\figurename~\ref{fig:lg2}) è possibile notare, oltre alla correzione della disomogeneità spaziale delle intensità, anche la rimozione della fluorescenza residua di sfondo.
+In \figurename~\ref{fig:lg1} è possibile notare la sostanziale correzione del difetto della luminosità disomogenea: le sferette aventi stessa intensità, originariamente percepite con differente luminosità, vengono rappresentate dopo la correzione con una medesima tonalità di colore, mostrando così in modo più fedele la realtà del campione.
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4lg2.png}
- \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza, al centro quella risultante dopo aver corretto l'``effetto dei bordi'' e in basso l'immagine privata del parametro costante di background. Per un'interpretazione più intuitiva le immagini raffigurate sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
+ \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella risultante dopo aver corretto l'``effetto dei bordi'' e in basso l'immagine privata del parametro costante di background. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
  \label{fig:lg2}
 \end{figure}
 
-Per quanto riguarda l'immagine delle cellule di fibroblasti, vero target dell'algoritmo di correzione, il cambiamento risulta davvero ben evidente: il difetto dei bordi è fortemente attenuato, infatti i nuclei più a margine riacquistano una colorazione molto più intensa e confrontabile con quella dei nuclei centrali, ed il background viene pressochè portato a zero, il tutto pur mantenendo ben definiti i confini delle varie cellule.
-Le varie fasi correttive dell'immagini sono ben evidenti sia in (\figurename~\ref{fig:lg3}) che in (\figurename~\ref{fig:cmap}).
+Nell'evoluzione dell'immagine di calibrazione delle sferette aventi cinque intensità differenti (\figurename~\ref{fig:lg2}) è possibile notare, oltre alla correzione della disomogeneità spaziale, anche la rimozione della fluorescenza residua di sfondo.
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4lg3.png}
- \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza, al centro quella risultante dopo aver corretto l'``effetto dei bordi'' e in basso l'immagine privata del parametro costante di background. Per un'interpretazione più intuitiva le immagini raffigurate sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
+ \caption{\small{Evoluzione dell'immagine delle cellule di fibroblasti: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella privata dei parametri costanti di background e in basso l'immagine risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
  \label{fig:lg3}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4cmap.png}
- \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata quella acquisita del microscopio a fluorescenza, al centro quella a cui sono stati sottratti i parametri costanti di background ed in basso l'immagine risultante dopo aver corretto l'ulteriore difetto della disomogeneità dell'illuminazione. Per un'interpretazione più intuitiva le immagini raffigurate sono le corrispettive immagini originali a cui è stato applicato il filtro gaussiano, rappresentate nella colour map ``gist\_ncar'', riportata a fianco.}}
+ \caption{\small{Evoluzione dell'immagine delle cellule di fibroblasti: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella privata dei parametri costanti di background e in basso l'immagine risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``gist\_ncar'' riportata a fianco, sono le corrispettive immagini originali a cui è stato applicato il filtro gaussiano.}}
  \label{fig:cmap}
 \end{figure}
+
+Per quanto riguarda l'immagine delle cellule di fibroblasti, vero target dell'algoritmo di correzione, il cambiamento risulta davvero ben evidente: il difetto dei bordi è fortemente attenuato, infatti i nuclei più a margine riacquistano una colorazione molto più intensa e confrontabile con quella dei nuclei centrali, ed inoltre il background viene pressoché portato a zero, il tutto mantenendo ben definiti i confini delle varie cellule.
+Le varie fasi correttive dell'immagini sono rappresentate sia in (\figurename~\ref{fig:lg3}) che in (\figurename~\ref{fig:cmap}).
+
+
+\section{Confronto tra differenti immagini di calibrazione}
+
+Come detto in precedenza, tale algoritmo permette la correzione dell'immagine a fluorescenza sulla base di due ulteriori immagini: la prima deve avere sferette di calibrazione a stessa intensità e viene sfruttata per la correzione dell'``effetto dei bordi'', mentre la seconda deve contenere sferette con differenti luminosità ed è necessaria per la rimozione del parametro di background. 
+\'E sulla base di queste due ultime immagini che si ottengono i parametri necessari per la correzione di quella in esame.
+Per tale motivo sono stati confrontati i risultati ottenuti con quattro distinte immagini di calibrazione ad una sola intensità: due con intensità relativa del 10\% (chiamate successivamente $10\%_1$ e $10\%_2$) e due con intensità relativa del 100\% (chiamate successivamente $100\%_1$ e $100\%_2$).
+
+Dalle Figure \ref{fig:gauss1}, \ref{fig:gauss2}, \ref{fig:gauss3} e \ref{fig:gauss4} è evidente il fatto che differenti immagini di calibrazioni comportino differenti superfici tridimensionali risultanti dal fit di maximum likelihood, indipendentemente dall'intensità relativa delle sferette.
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4gauss1.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss1}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4gauss2.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss2}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4gauss3.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss3}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4gauss4.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss4}
+\end{figure}
+
+Per poter avere un'analisi di carattere più quantitativo sono stati visualizzati i parametri $bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr$ ed $e$ ottenuti dalla stima di massima verosimiglianza (capitolo 3.1) eseguita nei quattro casi (Figure \ref{fig:cx}, \ref{fig:cy}, \ref{fig:dsy}, \ref{fig:dsy} \ref{fig:bg}, \ref{fig:intmax}, \ref{fig:corr} e \ref{fig:e}).
+Queste stime di massima verosimiglianza sono state inoltre raccolte nella \tablename~\ref{TABris}, assieme al primo parametro approssimato di background $bg_0$, calcolato inizialmente come massimo delle mode di ogni riga della matrice bidimensionale corrispondente all'immagine.
+
+Dall'analisi di questi risultati si nota che differenti immagini di calibrazione comportano in genere differenti parametri, sebbene i valori si mantengano solitamente entro lo stesso ordine di grandezza.
+Tuttavia per avere una miglior valutazione dell'effetto che tali differenze potrebbero comportare sulla correzione finale dell'immagine bisognerebbe eseguire elaborazioni successive, più raffinate rispetto alla semplice analisi qui riportata.
+
+\begin{table}
+ \begin{center}
+\begin{small}
+\begin{tabular}{lcccc}
+\hline\hline
+&$\mathbf{10\%_1}$&$\mathbf{10\%_2}$&$\mathbf{100\%_1}$&$\mathbf{100\%_2}$\\
+\hline
+$\mathbf{bg_0}$& 19 & 19 & 13 & 13\\
+\hline
+$\mathbf{cx}$&$767\pm11$&$832\pm10$&$881\pm9$&$831\pm10$\\
+$\mathbf{cy}$&$587\pm9$&$583\pm7$&$583\pm6 $&$608\pm6$\\
+$\mathbf{dsx}$&$823\pm205$&$ 797\pm131$&$568 \pm17$&$663\pm66$\\
+$\mathbf{dsy}$&$646\pm159$&$524\pm85$&$ 409\pm11$&$453\pm44$\\
+$\mathbf{corr}$&$-0.29\pm0.06$&$-0.65\pm0.05 $&$-0.51\pm0.05$&$-0.49\pm0.05$\\
+$\mathbf{bg}$&$1.58\cdot 10^{-6}\pm102$&$23\pm40 $&$452\pm13$&$341\pm82$\\
+$\mathbf{maxint}$&$167\pm104$&$150\pm41$&$229\pm15$&$414\pm87$\\
+$\mathbf{e}$&$3.2\pm0.6$&$2.1\pm0.3$&$3.6\pm0.4$&$2.5\pm0.4$\\
+\hline\hline
+\end{tabular}
+\caption{\small{Confronto dei parametri ottenuti nella prima fase dell'algoritmo con quattro distinte immagini di calibrazione ad una sola intensità.}}
+\label{TABris}
+\end{small}
+\end{center}
+\end{table}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4cx.png}
+ \caption{\small{Parametro $cx$ (centro delle x) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:cx}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4cy.png}
+ \caption{\small{Parametro $cy$ (centro delle y) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:cy}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4dsx.png}
+ \caption{\small{Parametro $dsx$ (deviazione standard di x) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:dsx}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4dsy.png}
+ \caption{\small{Parametro $dsy$ (deviazione standard di y) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:dsy}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4bg.png}
+ \caption{\small{Parametro $bg$ (background) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:bg}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4intmax.png}
+ \caption{\small{Parametro $maxint$ (intensità massima) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:intmax}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4corr.png}
+ \caption{\small{Parametro $corr$ (correlazione tra x ed y) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:corr}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.50]{img/CAP4e.png}
+ \caption{\small{Parametro $e$ (esponente) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \label{fig:e}
+\end{figure}
+
+
