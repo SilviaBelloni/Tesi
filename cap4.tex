@@ -146,37 +146,39 @@ Dalle Figure \ref{fig:gauss1}, \ref{fig:gauss2}, \ref{fig:gauss3} e \ref{fig:gau
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4gauss1.png}
+ \includegraphics[scale=.45]{img/CAP4gauss1.png}
  \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
  \label{fig:gauss1}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4gauss2.png}
+ \includegraphics[scale=.45]{img/CAP4gauss2.png}
  \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
  \label{fig:gauss2}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4gauss3.png}
+ \includegraphics[scale=.45]{img/CAP4gauss3.png}
  \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
  \label{fig:gauss3}
 \end{figure}
 
 \begin{figure}
  \centering
- \includegraphics[scale=.50]{img/CAP4gauss4.png}
+ \includegraphics[scale=.45]{img/CAP4gauss4.png}
  \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
  \label{fig:gauss4}
 \end{figure}
 
-Per poter avere un'analisi di carattere più quantitativo sono stati visualizzati i parametri $bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr$ ed $e$ ottenuti dalla stima di massima verosimiglianza (capitolo 3.1) eseguita nei quattro casi (Figure \ref{fig:cx}, \ref{fig:cy}, \ref{fig:dsy}, \ref{fig:dsy} \ref{fig:bg}, \ref{fig:intmax}, \ref{fig:corr} e \ref{fig:e}).
+Per poter avere un'analisi di carattere più quantitativo sono stati visualizzati i parametri $bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr$ ed $e$ ottenuti dalla stima di massima verosimiglianza (capitolo 3.1) eseguita nei quattro casi (Figure \ref{fig:cx}, \ref{fig:cy}, \ref{fig:dsx}, \ref{fig:dsy} \ref{fig:bg}, \ref{fig:intmax}, \ref{fig:corr} e \ref{fig:e}).
 Queste stime di massima verosimiglianza sono state inoltre raccolte nella \tablename~\ref{TABris}, assieme al primo parametro approssimato di background $bg_0$, calcolato inizialmente come massimo delle mode di ogni riga della matrice bidimensionale corrispondente all'immagine.
 
 Dall'analisi di questi risultati si nota che differenti immagini di calibrazione comportano in genere differenti parametri, sebbene i valori si mantengano solitamente entro lo stesso ordine di grandezza.
 Tuttavia per avere una miglior valutazione dell'effetto che tali differenze potrebbero comportare sulla correzione finale dell'immagine bisognerebbe eseguire elaborazioni successive, più raffinate rispetto alla semplice analisi qui riportata.
+
+Nelle Figure \ref{fig:c1}, \ref{fig:c2}, \ref{fig:c3}, \ref{fig:c4} sono riportate le matrici di correlazione tra le stime dei parametri per le quattro differenti immagini di calibrazione.
 
 \begin{table}
  \begin{center}
@@ -197,7 +199,7 @@ $\mathbf{maxint}$&$167\pm104$&$150\pm41$&$229\pm15$&$414\pm87$\\
 $\mathbf{e}$&$3.2\pm0.6$&$2.1\pm0.3$&$3.6\pm0.4$&$2.5\pm0.4$\\
 \hline\hline
 \end{tabular}
-\caption{\small{Confronto dei parametri ottenuti nella prima fase dell'algoritmo con quattro distinte immagini di calibrazione ad una sola intensità.}}
+\caption{\small{Confronto dei parametri ottenuti nella prima fase dell'algoritmo con quattro distinte immagini di calibrazione ad una sola intensità. Per ciascun parametro del fit vengono riportate la miglior stima e la deviazione standard associata, ottenute dalla procedura di fit. La precisione dei valori risulta elevata proprio poiché non si tratta di incertezze associate alla stima, bensì dei valori che approssimano localmente la funzione di likelihood con una distribuzione gaussiana.}}
 \label{TABris}
 \end{small}
 \end{center}
@@ -206,57 +208,85 @@ $\mathbf{e}$&$3.2\pm0.6$&$2.1\pm0.3$&$3.6\pm0.4$&$2.5\pm0.4$\\
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4cx.png}
- \caption{\small{Parametro $cx$ (centro delle x) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $cx$ (centro delle x) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:cx}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4cy.png}
- \caption{\small{Parametro $cy$ (centro delle y) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $cy$ (centro delle y) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:cy}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4dsx.png}
- \caption{\small{Parametro $dsx$ (deviazione standard di x) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $dsx$ (deviazione standard di x) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:dsx}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4dsy.png}
- \caption{\small{Parametro $dsy$ (deviazione standard di y) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $dsy$ (deviazione standard di y) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:dsy}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4bg.png}
- \caption{\small{Parametro $bg$ (background) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $bg$ (background) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:bg}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4intmax.png}
- \caption{\small{Parametro $maxint$ (intensità massima) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $maxint$ (intensità massima) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:intmax}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4corr.png}
- \caption{\small{Parametro $corr$ (correlazione tra x ed y) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $corr$ (correlazione tra x ed y) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:corr}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.50]{img/CAP4e.png}
- \caption{\small{Parametro $e$ (esponente) ed errore associato, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
+ \caption{\small{Parametro $e$ (esponente) e intervallo di confidenza al 95\%, ottenuti tramite il fit di maximum likelihood presente nell'algoritmo, per le quattro differenti immagini di calibrazione ad una sola intensità.}}
  \label{fig:e}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4c1.png}
+ \caption{\small{Matrice di correlazione tra le stime dei parametri ottenuti dal fit di maximum likelihood per l'immagine di calibrazione $10\%_1$.}}
+ \label{fig:c1}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4c2.png}
+ \caption{\small{Matrice di correlazione tra le stime dei parametri ottenuti dal fit di maximum likelihood per l'immagine di calibrazione $10\%_2$.}}
+ \label{fig:c2}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4c3.png}
+ \caption{\small{Matrice di correlazione tra le stime dei parametri ottenuti dal fit di maximum likelihood per l'immagine di calibrazione $100\%_1$.}}
+ \label{fig:c3}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4c4.png}
+ \caption{\small{Matrice di correlazione tra le stime dei parametri ottenuti dal fit di maximum likelihood per l'immagine di calibrazione $100\%_2$.}}
+ \label{fig:c4}
 \end{figure}
 
 
