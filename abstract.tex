@@ -2,4 +2,12 @@
 
 \chapter*{Abstract}
 
-
+Questo progetto di tesi si propone di calibrare il microscopio a fluorescenza usato nel laboratorio di biofisica, così da poter eseguire analisi quantitative sulle immagini con esso acquisite. 
+Infatti, senza tale calibrazione le immagini a microscopia sarebbero intrinsecamente affette da molteplici tipi di distorsioni, tra cui aberrazioni, diffrazione e difetti di natura tecnico-sperimentale. 
+Il difetto sul quale ci siamo particolarmente soffermati è la disomogeneità di campo, ossia una non uniforme fluorescenza causata dalla forma irregolare del fascio di eccitazione.
+Per conseguire l'obiettivo da noi proposto è necessaria l'acquisizione, in parallelo al campione in esame, di immagini di calibrazione generate tramite sfere nanometriche a fluorescenza nota.
+A partire da queste, tramite procedure di ``image processing'' da noi implementate nel linguaggio Python, abbiamo stimato la funzione di correzione della fluorescenza, localmente per ogni punto dell'immagine.
+Per la creazione di tale algoritmo abbiamo ipotizzato una possibile distribuzione dell'intensità dovuta alla non omogeneità del fascio ed abbiamo quindi stimato i parametri tramite un'apposita procedura di maximum likelihood.
+Tale stima è stata eseguita tenendo conto di possibili effetti dovuti alla luminosità di background, al margine ed alla sovrapposizione di più nanosfere.
+Questa procedura è stata ripetuta su quattro diverse immagini di calibrazione, per valutarne la consistenza e la validità.
+Inoltre, per poter verificare che il software di elaborazione abbia le desiderate proprietà di linearità tra segnale misurato ed intensità nota, ci siamo serviti di un'ulteriore immagine di calibrazione contenente una mistura di sfere nanometriche con intensità variabili su due ordini di grandezza.
