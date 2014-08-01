@@ -73,14 +73,14 @@ Tale funzione restituisce il p-value come semplice parametro di return e questo 
 \begin{figure}
  \centering
  \includegraphics[scale=.55]{img/CAP4pvalue1.png}
- \caption{\small{Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa alla prima immagine di calibrazione. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:unaint}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:unaintcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
+ \caption{\small{Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa alla prima immagine di calibrazione. Il grafico in alto è associato alla fase di pre-correzione (\figurename~\ref{fig:unaint}), mentre quello in basso alla fase di post-correzione (\figurename~\ref{fig:unaintcorr}). Al di sopra sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
  \label{fig:pvalue1}
 \end{figure}
 
 \begin{figure}
  \centering
  \includegraphics[scale=.55]{img/CAP4pvalue2.png}
- \caption{\small{Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa alla seconda immagine di calibrazione. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:piuint}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:piuintcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
+ \caption{\small{Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa alla seconda immagine di calibrazione. Il grafico in alto è associato alla fase di pre-correzione (\figurename~\ref{fig:piuint}), mentre quello in basso alla fase di post-correzione (\figurename~\ref{fig:piuintcorr}). Al di sopra sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
  \label{fig:pvalue2}
 \end{figure}
 
@@ -88,11 +88,11 @@ Tale funzione restituisce il p-value come semplice parametro di return e questo 
  \centering
  \includegraphics[scale=.55]{img/CAP4pvalue3.png}
  \caption{\small{
- Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa all'immagine delle cellule di fibroblasti. Il grafico a sinistra è associato alla fase di pre-correzione (\figurename~\ref{fig:cell}), mentre quello a destra alla fase di post-correzione (\figurename~\ref{fig:cellcorr}). In alto sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
+ Distribuzione delle intensità dei massimi in funzione della distanza radiale, relativa all'immagine delle cellule di fibroblasti. Il grafico in alto è associato alla fase di pre-correzione (\figurename~\ref{fig:cell}), mentre quello in basso alla fase di post-correzione (\figurename~\ref{fig:cellcorr}). Al di sopra sono riportati i valori del p-value associato alla corrispondente regressione lineare. Come previsto, il p-value si avvicina ad 1 una volta applicato l'algoritmo sull'immagine.}}
  \label{fig:pvalue3}
 \end{figure}
 
-Come si evince dalle Figure \ref{fig:pvalue1}, \ref{fig:pvalue2}, \ref{fig:pvalue3}, il p-value viene altamente modificato dall'algoritmo e fatto crescere verso valori sempre più prossimi ad uno, comportando quindi una npiù piccola possibilità di correlazione esistente tra intensità e distanza radiale, sia nelle immagini di calibrazione che nell'immagine dei fibroblasti. 
+Come si evince dalle Figure \ref{fig:pvalue1}, \ref{fig:pvalue2}, \ref{fig:pvalue3}, il p-value viene altamente modificato dall'algoritmo e fatto crescere verso valori sempre più prossimi ad uno, comportando quindi una più piccola possibilità di correlazione esistente tra intensità e distanza radiale, sia nelle immagini di calibrazione che nell'immagine dei fibroblasti. 
 Perciò, sulla base di tale analisi, dopo aver corretto l'immagine la dipendenza spaziale dell'intensità, inizialmente presente a causa della disomogeneità dell'illuminazione creata dalla sorgente, può essere considerata sostanzialmente non significativa.
 
 
@@ -133,7 +133,7 @@ Nell'evoluzione dell'immagine di calibrazione delle sferette aventi cinque inten
 \end{figure}
 
 Per quanto riguarda l'immagine delle cellule di fibroblasti, vero target dell'algoritmo di correzione, il cambiamento risulta davvero ben evidente: il difetto dei bordi è fortemente attenuato, infatti i nuclei più a margine riacquistano una colorazione molto più intensa e confrontabile con quella dei nuclei centrali, ed inoltre il background viene pressoché portato a zero, il tutto mantenendo ben definiti i confini delle varie cellule.
-Le varie fasi correttive dell'immagini sono rappresentate sia in (\figurename~\ref{fig:lg3}) che in (\figurename~\ref{fig:cmap}).
+Le varie fasi correttive dell'immagine sono rappresentate sia in (\figurename~\ref{fig:lg3}) che in (\figurename~\ref{fig:cmap}).
 
 
 \section{Confronto tra differenti immagini di calibrazione}

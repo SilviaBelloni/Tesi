@@ -66,7 +66,7 @@ Tale scelta è stata fatta perché ogni sferetta non viene rappresentata come pu
 
 Sempre all'interno di \textit{find\_max} viene associata ad ogni punto di massimo un'intensità integrale media. 
 Questa viene calcolata richiamando la funzione \textit{intensity}, la quale somma i valori dei pixel che costituiscono la sferetta e divide il tutto per il numero totale di pixel contati, così da tener conto del fatto che non si tratta di un punto oggetto privo di dimensioni, bensì di un'area con una certa estensione. 
-Per fare ciò ovviamente è necessario valutare il raggio \textit{delta} della sferetta, nel nostro caso stimato pari a 5 pixel (\figurename~\ref{fig:unaint}).
+Per fare ciò ovviamente è necessario valutare il raggio \textit{delta} della sferetta, nel nostro caso stimato pari a 5 pixel (\figurename~\ref{fig:punto}).
 
 \begin{figure}
  \centering
@@ -98,7 +98,7 @@ Detto in altri termini, il punto di massimo della funzione di verosimiglianza è
 Dopo varie analisi si è notato che la funzione che al meglio descrive il comportamento dei massimi di intensità è una funzione di tipo esponenziale, simile ad una gaussiana, descritta all'interno della funzione \textit{gauss} tramite la relazione:
 $$ G = bg + maxint \cdot \exp \{ {-\frac{1}{2} [{     (\frac{x-cx}{dsx})^2   +  (\frac{y-cy}{dsy})^2  +  \frac{corr \cdot (x-cx) \cdot (y-cy)}{dsx \cdot dsy} ]}^{\frac{e}{2}}}\} $$
 dove $bg$ è il parametro di background, $maxint$ è l'intensità massima, $cx$ e $cy$ sono rispettivamente i centri delle coordinate x e y, $dsx$ e $dsy$ sono rispettivamente le deviazioni standard delle coordinate x e y, $corr$ è il parametro di correlazione tra x ed y ed infine $e$ è l'esponente.
-Facendo riferimento alla trattazione precedente $G$ corrisponde alla funzione di verosimiglianza $L_{x_{oss}}(\theta)$, ove $\theta$ in tal caso è l'insieme dei parametri $(bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr,\ e)$.
+Facendo riferimento alla trattazione precedente, $G$ corrisponde alla funzione di verosimiglianza $L_{x_{oss}}(\theta)$, ove $\theta$ in tal caso è l'insieme dei parametri $(bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr,\ e)$.
 Essendo questo uno dei punti cardine della correzione, si è deciso di parallelizzare la funzione \textit{gauss}, così da avere un guadagno nei tempi e nell'affaticamento dei core di almeno quattro volte.
 
 \begin{figure}
@@ -110,10 +110,10 @@ Essendo questo uno dei punti cardine della correzione, si è deciso di paralleli
 
 Una volta ottenuta la stima di massima verosimiglianza, ossia il set di parametri in grado di massimizzare la likelihood function, ciò che si viene a creare è una superficie tridimensionale con forma analoga a quella riportata in \figurename~\ref{fig:gauss}. 
 Quest'ultima immagine mette bene in evidenza il fatto che alcuni punti di massimo corrispondono ad intensità molto elevate rispetto alla media, pur trattandosi di sferette con medesima intensità relativa.
-Questo fenomeno è da associarsi alla possibilità che due sferette possano trovarsi così vicine da apparire sovrapposte ed essendo questa un'alterazione dei risultati è necessario rieseguire il calcolo dei parametri dopo aver eliminato tali punti più intensi. 
+Questo fenomeno è da associarsi alla possibilità che due sferette possano trovarsi così vicine da apparire sovrapposte e, essendo questa un'alterazione dei risultati, è necessario rieseguire il calcolo dei parametri dopo aver eliminato tali punti più intensi. 
 Per fare ciò viene utilizzato il quantile$_{0.95}$, ossia vengono eliminati dal nuovo fit quei pixel con intensità superiore ad esso, pari per definizione al 5\% dei massimi inizialmente rilevati.
 I nuovi parametri ottenuti a questa seconda iterazione sono restituiti dalla funzione \textit{analyze} e risultano essere la chiave per la correzione dell'``effetto dei bordi'' di una qualunque immagine a fluorescenza, anche la stessa di calibrazione (\figurename~\ref{fig:unaintcorr}).
-Infatti a questo punto inserendo una qualsiasi immagine come variabile di ingresso della funzione \textit{correction} è possibile eliminare tale difetto sfruttando unicamente la stima di massima verosimiglianza precedentemente calcolata. 
+Infatti a questo punto, inserendo una qualsiasi immagine come variabile di ingresso della funzione \textit{correction}, è possibile eliminare tale difetto sfruttando unicamente la stima di massima verosimiglianza precedentemente calcolata. 
 Tale funzione è molto semplice poiché sfrutta la normalizzazione del valore dei pixel dell'immagine sulla base del valore previsto dalla superficie tridimensionale.
 
 \begin{figure}
@@ -139,7 +139,7 @@ La seconda immagine di calibrazione, costituita da sferette aventi differenti in
 Come nella prima fase dell'algoritmo, all'utente viene richiesto di inserire l'immagine, così da applicare il filtro gaussiano e sottrarre il parametro approssimato del background. 
 Successivamente, sulla base dei parametri del fit calcolati tramite la prima immagine di calibrazione viene corretto il difetto dei bordi.
 
-A questo punto ai fini del controllo della risposta lineare del microscopio,  nell'immagine vengono riconosciute le curve gaussiane relative alle differenti intensità. 
+A questo punto ai fini del controllo della risposta lineare del microscopio, vengono riconosciute nell'immagine le curve gaussiane relative alle differenti intensità. 
 Per esempio nel nostro caso sono stati inseriti nel campione cinque diversi tipi di sferette, escludendo quelle con intensità relativa del 0.3\% poiché poco intensa, e di conseguenza vengono riconosciute cinque distinte curve gaussiane.
 Tale operazione è resa possibile dalla funzione \textit{Gaussian Mixture Model (GMM)}, la quale permette l'identificazione all'interno di un campione di dati di una serie di curve gaussiane e la valutazione dei parametri associati, come ad esempio: popolazione, valore medio e covarianza della curva (\figurename~\ref{fig:istogauss}).
 
@@ -147,7 +147,7 @@ Tale operazione è resa possibile dalla funzione \textit{Gaussian Mixture Model 
 \begin{figure}
  \centering
  \includegraphics[scale=.60]{img/CAP3istogauss.png}
- \caption{\small{Istogramma delle cinque curve gaussiane corrispondenti alle intensità dei massimi presenti nella seconda immagine di calibrazione, una volta corretta dall'``effetto dei bordi''. La linea marcata e l'area sfumata presenti su ogni curva rappresentano rispettivamente il valore medio e la deviazione standard della gaussiana identificati dalla GMM.}}
+ \caption{\small{Istogramma delle cinque curve gaussiane corrispondenti alle intensità dei massimi presenti nella seconda immagine di calibrazione, una volta corretta dall'``effetto dei bordi''. La linea marcata e l'area sfumata presenti su ogni curva rappresentano rispettivamente il valore medio e la deviazione standard della gaussiana, identificati dalla GMM.}}
  \label{fig:istogauss}
 \end{figure}
 
