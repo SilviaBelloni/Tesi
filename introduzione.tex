@@ -9,9 +9,9 @@
 \end{small}\end{flushright}
 
 Nella moderna biologia cellulare le immagini a microscopia a fluorescenza stanno divenendo via via più importanti, in quanto permettono di ottenere risultati necessari per successive analisi quantitative.
-Ciò è possibile poiché tale tipo di microscopia fornisce una misura, risolta sia spazialmente che temporalmente, della concentrazione di varie molecole presenti in cellule, tessuti e persino in interi animali. 
-L'ampia varietà di etichette molecolari specifiche, tra cui proteine fluorescenti geneticamente codificate, ed una serie di nuove tecniche e modalità di imaging hanno trasformato la microscopia a fluorescenza da semplice test di localizzazione sino a vero e proprio strumento atto all'analisi funzionale quantitativa.
-Inoltre, dato l'ampio utilizzo di tale tecnica ed il forte sviluppo di nuove metodologie, è diventato fondamentale per la maggior parte dei biologi essere in grado di valutare criticamente le immagini acquisite, facendone un'analisi quantitativa la più corretta possibile \cite{fluo}.
+Ciò è possibile poiché tale tipo di microscopia fornisce una misura della concentrazione di varie molecole presenti in cellule e tessuti, risolta sia spazialmente che temporalmente.
+L'ampia varietà di etichette molecolari specifiche, tra cui proteine fluorescenti geneticamente codificate, ed una serie di nuove tecniche e modalità di imaging hanno trasformato la microscopia a fluorescenza da semplice test di localizzazione a vero e proprio strumento atto all'analisi funzionale quantitativa.
+Inoltre, dato l'ampio utilizzo di tale tecnica ed il rapido sviluppo di nuove metodologie, è diventato fondamentale per la maggior parte dei biologi essere in grado di valutare criticamente le immagini acquisite, effettuando un'analisi quantitativa nel modo più corretto possibile \cite{fluo}.
 
 Tuttavia, per poter eseguire analisi quantitative su immagini in fluorescenza è necessaria una preliminare calibrazione del microscopio.
 Difatti, le immagini a microscopia soffrono di varie distorsioni, dovute a molteplici cause, tra cui aberrazioni, diffrazione e difetti di natura tecnico-sperimentale.
@@ -20,13 +20,13 @@ Nel lavoro svolto all'interno di questa tesi ci siamo occupati in particolare de
 Per conseguire l'obiettivo da noi proposto è stato necessario l'utilizzo di materiali nanometrici con fluorescenza nota, in modo da ottenere apposite immagini di riferimento. 
 A partire da queste, con delle procedure di ``image processing'' da noi implementate, abbiamo stimato la funzione di correzione della fluorescenza, localmente per ogni punto dell'immagine.
 
-Nel primo capitolo è stato introdotto il fenomeno fisico della fluorescenza ed è stata mostrata la sua applicazione nel campo biologico, grazie ai cosiddetti fluorofori, o fluorocromi, inseriti all'interno delle cellule secondo opportune tecniche di marcatura.
+Nel primo capitolo è introdotto il fenomeno fisico della fluorescenza ed è mostrata la sua applicazione nel campo biologico, grazie ai cosiddetti fluorofori, o fluorocromi, inseriti all'interno delle cellule secondo opportune tecniche di marcatura.
 
-Nel secondo capitolo sono state descritte le varie caratteristiche di un tipico microscopio a fluorescenza, ponendo in particolare l'attenzione sul microscopio Nikon Eclipse-Ti del Dipartimento di Fisica di Bologna. 
-Inoltre, sempre in tale capitolo, sono state introdotte le principali imperfezioni che possono manifestarsi all'interno delle immagini a microscopia, suddivisibili a seconda della causa in difetti di natura geometrica, fisica o tecnica.
+Nel secondo capitolo sono descritte le varie caratteristiche di un tipico microscopio a fluorescenza, ponendo in particolare l'attenzione sul microscopio Nikon Eclipse-Ti del Dipartimento di Fisica di Bologna. 
+Inoltre, sempre in tale capitolo, sono introdotte le principali imperfezioni che possono manifestarsi all'interno delle immagini a microscopia, suddivisibili a seconda della causa in difetti di natura geometrica, fisica o tecnica.
 
-Nel terzo capitolo è stato descritto nei suoi tratti fondamentali l'algoritmo sviluppato con tale progetto di tesi. 
+Nel terzo capitolo è descritto nei suoi tratti fondamentali l'algoritmo sviluppato con tale progetto di tesi. 
 Esso, scritto nel linguaggio di programmazione Python, può essere frazionato in tre principali fasi: correzione della disomogeneità spaziale della fluorescenza, rimozione della luminosità di background e correzione finale dell'immagine volta ad analisi quantitativa.
 
-Infine, nel quarto capitolo sono stati esposti i risultati ottenuti tramite l'applicazione dell'algoritmo su immagini a fluorescenza rossa di cellule di fibroblasti.
+Infine, nel quarto capitolo sono esposti i risultati ottenuti tramite l'applicazione dell'algoritmo su immagini a fluorescenza rossa di cellule di fibroblasti.
 Essi sono stati analizzati e rivisitati sotto differenti punti di vista, da quelli di natura qualitativa fino a quelli più quantitativi come l'analisi del p-value o della matrice di correlazione, così da valutare al meglio l'efficacia del software di correzione da noi sviluppato.
