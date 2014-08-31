@@ -21,8 +21,8 @@ Quest'ultimo difetto è quello che grava maggiormente su un'eventuale analisi qu
  \label{fig:bordi}
 \end{figure}
 
-Questo programma di correzione della luminosità sfrutta delle sfere nanometrice prodotte appositamente per la calibrazione dei microscopi a fluorescenza.
-Queste sfere sono di dimensione costante e intensità di luminosità nota, con diversi set di sfere che coprono un ampio range di intensità in modo da poter creare una curva di calibrazione dall'intensità del segnale osservato (dipendente ad esempio dalla luminosità dell'irraggiamento e dal tempo di esposizione) alla concentrazione di fluoroforo sottostante
+Questo programma di correzione della luminosità sfrutta delle sfere nanometrice, di dimensione costante ed intensità di luminosità nota, prodotte appositamente per la calibrazione dei microscopi a fluorescenza.
+Esistono diversi set di nanosfere in grado di coprire ampi range di intensità, così da poter creare una curva di calibrazione dall'intensità del segnale osservato (dipendente ad esempio dalla luminosità dell'irraggiamento e dal tempo di esposizione) alla concentrazione di fluoroforo sottostante.
  
 Nel nostro caso si è sfruttato il kit di sfere nanometriche fluorescenti nel rosso ``InSpeck Microscope Image Intensity Calibration'', acquistate appositamente per la calibrazione del microscopio in uso.
 Esso consiste in una fiala di $5\ ml$ di mezzo di sospensione e 7 fiale di microsfere di polistirene atossico aventi differenti intensità relative: 0\%, 0.3\%, 1\%, 3\%, 10\%, 30\% e 100\%.
@@ -43,7 +43,7 @@ L'algoritmo mira alla compensazione di questa disomogeneità stimando punto per 
 Per far questo necessita di una immagine di calibrazione, ossia di un campo contenente solo nanosfere con un'unica intensità (\figurename~\ref{fig:unaint}).
 Tramite questa calibrazione l'algoritmo riesce a eliminare in modo sostanziale la dipendenza dell'intensità dalla posizione del pixel. 
 
-\begin{figure}
+\begin{figure}[p]
  \centering
  \includegraphics[scale=.64]{img/CAP3unaint.png}
  \caption{\small{Immagine a fluorescenza (1600x1200 pixel) di sferette con intensità relativa del 10\%.}}
@@ -52,28 +52,26 @@ Tramite questa calibrazione l'algoritmo riesce a eliminare in modo sostanziale l
 
 Inizialmente il programma applica sull'immagine il filtro gaussiano, tipico filtro di smoothing molto efficace per attenuare il rumore presente (counting noise dovuto alla bassa intensità delle immagini), e calcola in un primo modo approssimato l'intensità costante residua.
 Questo background viene valutato in modo statistico come massimo delle mode, ossia dei valori che compaiono più frequentemente, di ogni riga della matrice bidimensionale che costituisce l'immagine. 
-Una volta calcolato, tale parametro viene sottratto a quest'ultima poiché valore costante in grado di alterare considerazioni quantitative.
+Tale parametro viene quindi sottratto a quest'ultima poiché valore costante in grado di alterare considerazioni quantitative.
 
-Una volta rimossa la componente principale dello sfondo, viene stimata il campo di illuminazione incidente, supposto proporzionale al segnale di ciascuna sferetta (che dovrebbe essere altrimenti omogeneo).
-Questo campo viene stimato tramite il fit di una funzione pseudo-gaussiana, che descrive ragionevolmente bene la luminosità osservata.
-Questa viene usata come campo di luminosità incidente per la correzione del segnale osservato.
+Una volta rimossa la componente principale dello sfondo, viene stimato il campo di illuminazione incidente, supposto proporzionale al segnale di ciascuna sferetta (che dovrebbe essere altrimenti omogeneo).
+Suddetto campo viene stimato tramite il fit, svolto all'interno del codice dalla routine \textit{analyze}, di una funzione pseudo-gaussiana.
+Quest'ultima descrive ragionevolmente bene la luminosità osservata e di conseguenza viene usata come campo di luminosità incidente per la correzione del segnale osservato.
 
-Nel codice questo fit è svolto dalla routine \textit{analyze}.
 
 \subsubsection*{Ricerca dei massimi}
 
-Il primo step necessario alla stima della funzione di illuminazione è la ricerca delle nanosfere nell'immagine.\todo{spiegare meglio i parametri e l'algoritmo}
-Queste sono approssimabili come punti di luminosità diffusa, distribuiti in modo gaussiano intorno al punto centrale.
-Queste luminosità dovrebbero essere tutte proporzionali all'intensità luminosa.
-La possibilità che alcune di questi punti lumosi sia in realtà la sovrapposizione di più sfere in contatto viene gestita nel momento del fit.
-La ricerca dei masimi viene svolta dalla routine \textit{find\_max}.
-Questa prende in input tre parametri, \textit{vicinanza\_size}, \textit{soglia} e \textit{margine}.\todo{non confondere programma ed algoritmo}
+Il primo step necessario alla stima della funzione di illuminazione è la ricerca delle nanosfere nell'immagine.
+Quest'ultime sono approssimabili come punti di luminosità diffusa, distribuiti in modo gaussiano intorno al punto centrale.
+Tali luminosità vengono ipotizzate tutte proporzionali all'intensità luminosa e la possibilità che alcuni di questi punti luce siano in realtà la sovrapposizione di più sfere in contatto viene gestita nel momento del fit.
+
+La ricerca dei massimi viene svolta dalla routine \textit{find\_max}, che prende in input tre parametri: \textit{vicinanza\_size}, \textit{soglia} e \textit{margine}.
 Il primo (\textit{vicinanza\_size}) dà la dimensione in pixel dell'area sfruttata dai filtri per la ricerca dei massimi e dei minimi relativi, perciò dovrà assumere valori minori al crescere della concentrazione delle sferette, ma approssimativamente simili al diametro delle nanosfere nell'immagine. 
 Il secondo (\textit{soglia}) indica quale debba essere il minimo valore di cui il massimo individuato debba superare il valore del background nei dintorni, per evitare di includere nel conteggio dei massimi dati da effetti di rumore.
 Di conseguenza tale parametro dipende dalla luminosità delle sferette: maggiore sarà quest'ultima e maggiore dovrà essere il suo valore.
-Dalla ricerca dei massimi viene escluso il confine dell'immagine, utilizzando il parametro \textit{margine}, che indica la largezza in pixel del bordo da rimuovere le la stima, per evitare di includere immagini parziali di nanosfere che potrebbero distorcere il fit.
-Questo criterio viene applicato successivamente alla determinazione dei punti di massimo (la localizzazione ed intensità di ciascuna nanosfera).
-Tale scelta è stata fatta perché ogni sferetta non viene rappresentata come punto oggetto, bensì con un cerchio di confusione (capitolo 2.2.1) e di conseguenza, nel caso in cui l'alone sia a cavallo del margine dell'immagine, potrebbe venire riconosciuto come massimo un punto che in realtà non è il centro della sferetta ma un pixel della sfumatura circostante.
+Dalla ricerca dei massimi viene escluso, successivamente alla determinazione dei punti di massimo (localizzazione ed intensità di ciascuna nanosfera), il confine dell'immagine, utilizzando il parametro \textit{margine}.
+Esso indica la larghezza in pixel del bordo da rimuovere dalla stima, così da evitare di includere immagini parziali di nanosfere che potrebbero distorcere il fit.
+Difatti ogni sferetta non viene rappresentata come punto oggetto, bensì con un cerchio di confusione (capitolo 2.2.1) e di conseguenza, nel caso in cui l'alone sia a cavallo del margine dell'immagine, potrebbe venire riconosciuto come massimo un punto che in realtà non è il centro della sferetta ma un pixel della sfumatura circostante.
 
 Sempre all'interno di \textit{find\_max} viene associata ad ogni punto di massimo un'intensità integrale media. 
 Questa viene calcolata richiamando la funzione \textit{intensity}, la quale somma i valori dei pixel che costituiscono la sferetta e divide il tutto per il numero totale di pixel contati, così da tener conto del fatto che non si tratta di un punto oggetto privo di dimensioni, bensì di un'area con una certa estensione. 
@@ -120,20 +118,20 @@ Essendo questo uno dei punti cardine della correzione, si è deciso di paralleli
  \label{fig:gauss}
 \end{figure}
 
-Una volta ottenuta la stima di massima verosimiglianza, ossia il set di parametri in grado di massimizzare la likelihood function, ciò che si viene a creare è una superficie tridimensionale con forma analoga a quella riportata in \figurename~\ref{fig:gauss}. 
-Quest'ultima immagine mette bene in evidenza il fatto che alcuni punti di massimo corrispondono ad intensità molto elevate rispetto alla media, pur trattandosi di sferette con medesima intensità relativa.
-Questo fenomeno è da associarsi alla possibilità che due sferette possano trovarsi così vicine da apparire sovrapposte e, essendo questa un'alterazione dei risultati, è necessario rieseguire il calcolo dei parametri dopo aver eliminato tali punti più intensi. 
-Per fare ciò viene utilizzato il quantile$_{0.95}$ dei massimi normalizzati, ossia vengono eliminati dal nuovo fit quei pixel con intensità superiore ad esso, pari per definizione al 5\% dei massimi inizialmente rilevati.
-I nuovi parametri ottenuti a questa seconda iterazione sono restituiti dalla funzione \textit{analyze} e sono utilizzabili per la correzione delle disomogeneità nelle regioni periferiche dell'immagine di qualunque immagine a fluorescenza rilevata con lo stesso apparata, inclusa la stessa di calibrazione (\figurename~\ref{fig:unaintcorr}).
-Infatti a questo punto, inserendo una qualsiasi immagine come variabile di ingresso della funzione \textit{correction}, è possibile eliminare tale difetto sfruttando unicamente la stima di massima verosimiglianza precedentemente calcolata. 
-Tale funzione è molto semplice poiché sfrutta la normalizzazione del valore dei pixel dell'immagine sulla base del valore previsto dalla superficie tridimensionale, rinormalizzando il segnale osservato per la funzione di intensità di illuminazione ottenuta.
-
-\begin{figure}
+\begin{figure}[p]
  \centering
  \includegraphics[scale=.64]{img/CAP3unaintcorr.png}
  \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' sull'immagine in \figurename~\ref{fig:unaint}.}}
  \label{fig:unaintcorr}
 \end{figure}
+
+Una volta ottenuta la stima di massima verosimiglianza, ossia il set di parametri in grado di massimizzare la likelihood function, ciò che si viene a creare è una superficie tridimensionale con forma analoga a quella riportata in \figurename~\ref{fig:gauss}. 
+Quest'ultima immagine mette bene in evidenza il fatto che alcuni punti di massimo corrispondono ad intensità molto elevate rispetto alla media, pur trattandosi di sferette con medesima intensità relativa.
+Questo fenomeno è da associarsi alla possibilità che due sferette possano trovarsi così vicine da apparire sovrapposte e, essendo questa un'alterazione dei risultati, è necessario rieseguire il calcolo dei parametri dopo aver eliminato tali punti più intensi. 
+Per fare ciò viene utilizzato il quantile$_{0.95}$ dei massimi normalizzati, ossia vengono eliminati dal nuovo fit quei pixel con intensità superiore ad esso, pari per definizione al 5\% dei massimi inizialmente rilevati.
+I nuovi parametri ottenuti a questa seconda iterazione sono restituiti dalla funzione \textit{analyze} e sono utilizzabili per la correzione delle disomogeneità nelle regioni periferiche dell'immagine di una qualunque immagine a fluorescenza rilevata con lo stesso apparato, inclusa la stessa di calibrazione (\figurename~\ref{fig:unaintcorr}).
+Infatti a questo punto, inserendo una qualsiasi immagine come variabile di ingresso della funzione \textit{correction}, è possibile eliminare tale difetto sfruttando unicamente la stima di massima verosimiglianza precedentemente calcolata. 
+Tale funzione è molto semplice poiché sfrutta la normalizzazione del valore dei pixel dell'immagine sulla base del valore previsto dalla superficie tridimensionale, rinormalizzando il segnale osservato per la funzione di intensità di illuminazione ottenuta.
 
 
 
@@ -141,7 +139,7 @@ Tale funzione è molto semplice poiché sfrutta la normalizzazione del valore de
 
 La seconda immagine di calibrazione, costituita da nanosfere aventi differenti intensità (\figurename~\ref{fig:piuint}), viene sfruttata per correggere il problema della fluorescenza residua di sfondo, tramite il controllo della risposta lineare dello strumento. 
 
-\begin{figure}
+\begin{figure}[p]
  \centering
  \includegraphics[scale=.64]{img/CAP3piuint.png}
  \caption{\small{Immagine a fluorescenza (1600x1200 pixel) di sferette con cinque differenti intensità relative: 1\%, 3\%, 10\%, 30\% e 100\%.}}
@@ -154,7 +152,8 @@ Successivamente, sulla base dei parametri del fit calcolati tramite la prima imm
 
 A questo punto ai fini del controllo della risposta lineare del microscopio, vengono riconosciute nell'immagine le curve gaussiane relative alle differenti intensità. 
 Nel nostro caso sono stati inseriti nel campione cinque diversi tipi di sferette, escludendo quelle con intensità relativa del 0.3\% poiché non sufficientemente intensa intensa, e di conseguenza vengono riconosciute cinque distinte curve gaussiane.
-Queste sono state identificate tramite un \textit{Gaussian Mixture Model (GMM)} sul logaritmo delle intensità, nel quale le intensità sono distribuite in modo approssimativamente regolare con deviazione standard e numero di osservazioni simili fra le varie gaussiane. Di ciascuna di questa viene registrata la media, la deviazione standard e la numerosità.
+Queste sono state identificate tramite un \textit{Gaussian Mixture Model (GMM)} sul logaritmo delle intensità, nel quale le intensità sono distribuite in modo approssimativamente regolare con deviazione standard e numero di osservazioni simili fra le varie gaussiane. 
+Di ciascuna di questa viene registrata la media, la deviazione standard e la numerosità.
 Il fit è stato effettuato tramite la funzione per le \textit{Gaussian Mixture Model (GMM)} presente nella libreria \textit{scikits-learn}.
 Un esempio dell'istogramma delle intensità risultante e del relativo fit si può vedere in \figurename~\ref{fig:istogauss}.
 
@@ -168,7 +167,7 @@ Un esempio dell'istogramma delle intensità risultante e del relativo fit si pu�
 I valori medi delle gaussiane rappresentano le intensità medie di ciascuna categoria di sferette e di conseguenza, essendo queste comunque note a priori, è possibile creare una regressione lineare tra le intensità previste e quelle effettivamente rilevate all'interno del campione, così da controllare la linearità della risposta e correggere di conseguenza il parametro di background. 
 Un primo fit lineare è stato fatto sfruttando la funzione \textit{linregress}, la quale restituisce un array contenente in particolare la slope e l'intercetta della curva di fit e la correlazione esistente tra i due set di dati in esame.
 Come si evince dalla \figurename~\ref{fig:linearita}, la relazione tra intensità rilevate e note sembra non essere perfettamente lineare. Infatti il grafico in scala logaritmica presenta una slope non identicamente unitaria, pari a 0.87, e quello in scala lineare mostra una leggera curvatura dell'andamento dei dati. 
-Inoltre le incertezze associate ai dati in esame, sebbene riportate nel grafico, risultano impercettibili, ulteriore indice del fatto che questa discrepanza dalla linearità non è frutto del caso.
+Inoltre le incertezze associate ai dati in esame, sebbene riportate nel grafico, risultano impercettibili, ulteriore indice del fatto che questa  difformità dalla linearità non è frutto del caso.
 Ad ogni modo la discrepanza risulta essere non troppo evidente e trattabile con una trasformazione non lineare semplice dell'intensità dell'immagine; per tale motivo, in prima approssimazione, possiamo ignorare eventuali non-linearità e considerare perciò verificata l'ipotesi di risposta lineare del microscopio. 
 
 \begin{figure}
@@ -216,7 +215,7 @@ Successivamente viene rimosso il difetto dei bordi sfruttando la funzione \texti
 
 Giunti a questo punto l'immagine si può ritenere corretta (\figurename~\ref{fig:cellcorr}) e di conseguenza risulta sicuramente più precisa una qualsiasi misura quantitativa eseguita su di essa.
 
-\begin{figure}
+\begin{figure}[p]
  \centering
  \includegraphics[scale=.64]{img/CAP3cellcorr.png}
  \caption{\small{Immagine risultante dalla correzione della disomogeneità e della fluorescenza di background sull'immagine in \figurename~\ref{fig:cell}. Si può notare (qualitativamente) come i nuclei periferici abbiano assunto un valore più simile a quelli centrali, con un maggior contrasto rispetto allo sfondo.}}
