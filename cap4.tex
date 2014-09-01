@@ -14,18 +14,16 @@ Tuttavia una delle due immagini con sferette aventi differente luminosità ha mo
 
 L'analisi che segue esamina l'efficacia dell'algoritmo nella rimozione della disomogeneità poiché, come visto in precedenza, il difetto della fluorescenza di sfondo viene semplicemente eliminato sottraendo il parametro costante identificato nella seconda fase.
 
-Tale capitolo si propone di esporre e commentare i risultati conseguiti dall'algoritmo tramite tre analisi: 
+Tale capitolo si propone di esporre e commentare i risultati conseguiti dall'algoritmo tramite due analisi: 
 \begin{itemize}
  \item gli istogrammi dell'intensità dell'immagine
  \item la dipendenza dell'intensità dalla distanza dal centro
- \item analisi qualitativa della qualità delle immagini
 \end{itemize}
 
 Queste tre rielaborazioni verranno affrontate sulla base di grafici e risultati ottenuti applicando l'algoritmo sull'immagine dei fibroblasti, nel particolar caso in cui la prima immagine di calibrazione sia costituita da un campione di sferette con intensità relativa del 10\%.
 Successivamente, per poter avere una miglior valutazione dell'efficacia del programma, verrà eseguito un confronto tra i risultati ottenuti utilizzando nella prima fase dell'algoritmo quattro distinte immagini di calibrazione, acquisite col microscopio a fluorescenza.
 
-% questa frase è superflua
-%Osserviamo inoltre che prima di giungere ai risultati finali di seguito riportati l'algoritmo è stato via via migliorato: ad esempio, si è constatato che la curva in grado di fittare al meglio i centri di sferette nella prima fase dell'algoritmo fosse, anziché una polinomiale, una curva di tipo guassiano, che l'intensità da associare ad ogni punto di massimo fosse meglio interpretarla come intensità integrale media piuttosto che puntuale ed inoltre sono stati ricavati ed inseriti i valori ottimali dei parametri utilizzati nei vari passaggi di elaborazione dell'immagine.
+In Appendice B mostriamo le immagini per dare un esempio qualitativo del risultato della correzione.
 
 \section{Distribuzione delle intensità}
 
@@ -117,49 +115,9 @@ Questo implica che dopo la correzione i dati sono compatibili con l'assenza di c
 Perciò, sulla base di tale analisi, dopo aver corretto l'immagine la dipendenza spaziale dell'intensità, inizialmente presente a causa della disomogeneità dell'illuminazione creata dalla sorgente, può essere considerata sostanzialmente non significativa.
 
 
-\section{Analisi qualitativa delle immagini}
-
-Anche dalla semplice osservazione delle immagini è possibile notare i cambiamenti apportati dall'algoritmo.
-
-\begin{figure}
- \centering
- \includegraphics[scale=.40]{img/CAP4lg1.png}
- \caption{\small{Evoluzione della prima immagine di calibrazione: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza e in basso quella risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
- \label{fig:lg1}
-\end{figure}
-
-In \figurename~\ref{fig:lg1} è possibile notare la sostanziale correzione del difetto della luminosità disomogenea: le sferette aventi stessa intensità, originariamente percepite con differente luminosità, vengono rappresentate dopo la correzione con una medesima tonalità di colore, mostrando così in modo più fedele la realtà del campione.
-
-\begin{figure}
- \centering
- \includegraphics[scale=.50]{img/CAP4lg2.png}
- \caption{\small{Evoluzione della seconda immagine di calibrazione: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella risultante dopo aver corretto l'``effetto dei bordi'' e in basso l'immagine privata del parametro costante di background. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
- \label{fig:lg2}
-\end{figure}
-
-Nell'evoluzione dell'immagine di calibrazione delle sferette aventi cinque intensità differenti (\figurename~\ref{fig:lg2}) è possibile notare, oltre alla correzione della disomogeneità spaziale, anche la rimozione della fluorescenza residua di sfondo.
-
-\begin{figure}
- \centering
- \includegraphics[scale=.50]{img/CAP4lg3.png}
- \caption{\small{Evoluzione dell'immagine delle cellule di fibroblasti: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella privata dei parametri costanti di background e in basso l'immagine risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``jet'' riportata a fianco, sono i logaritmi delle corrispettive immagini originali, a cui è stato applicato ulteriormente il filtro gaussiano.}}
- \label{fig:lg3}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[scale=.50]{img/CAP4cmap.png}
- \caption{\small{Evoluzione dell'immagine delle cellule di fibroblasti: in alto è raffigurata l'immagine acquisita col microscopio a fluorescenza, al centro quella privata dei parametri costanti di background e in basso l'immagine risultante dopo aver corretto l'``effetto dei bordi''. Le immagini, rappresentate nella color map ``gist\_ncar'' riportata a fianco, sono le corrispettive immagini originali a cui è stato applicato il filtro gaussiano.}}
- \label{fig:cmap}
-\end{figure}
-
-Per quanto riguarda l'immagine delle cellule di fibroblasti, vero target dell'algoritmo di correzione, il cambiamento risulta davvero ben evidente: il difetto dei bordi è fortemente attenuato, infatti i nuclei più a margine riacquistano una colorazione molto più intensa e confrontabile con quella dei nuclei centrali, ed inoltre il background viene pressoché portato a zero, il tutto mantenendo ben definiti i confini delle varie cellule.
-Le varie fasi correttive dell'immagine sono rappresentate sia in (\figurename~\ref{fig:lg3}) che in (\figurename~\ref{fig:cmap}).
-
-
 \section{Confronto tra differenti immagini di calibrazione}
 
-Come detto in precedenza, tale algoritmo permette la correzione dell'immagine a fluorescenza sulla base di due ulteriori immagini: la prima deve avere sferette di calibrazione a stessa intensità e viene sfruttata per la correzione dell'``effetto dei bordi'', mentre la seconda deve contenere sferette con differenti luminosità ed è necessaria per la rimozione del parametro di background. 
+Come detto in precedenza, tale algoritmo permette la correzione dell'immagine a fluorescenza sulla base di due ulteriori immagini: la prima deve avere sferette di calibrazione a stessa intensità e viene sfruttata per la correzione della disomogeneità di illuminazione, mentre la seconda deve contenere sferette con differenti luminosità ed è necessaria per la rimozione del parametro di background. 
 \'E sulla base di queste due ultime immagini che si ottengono i parametri necessari per la correzione di quella in esame.
 Per tale motivo sono stati confrontati i risultati ottenuti con quattro distinte immagini di calibrazione ad una sola intensità: due con intensità relativa del 10\% (chiamate successivamente $10\%_1$ e $10\%_2$) e due con intensità relativa del 100\% (chiamate successivamente $100\%_1$ e $100\%_2$).
 

@@ -212,7 +212,7 @@ Tale soluzione risulta molto utile specialmente negli esperimenti in cui si osse
 
 \begin{figure}
  \centering
- \includegraphics[scale=.65]{img/CAP2bande.png}
+ \includegraphics[scale=.70]{img/CAP2bande.png}
  \caption{\small{Bande di emissione dei marcatori fluorescenti e del LED a 870 nm.}}
  \label{fig:bande}
 \end{figure}
@@ -220,51 +220,14 @@ Tale soluzione risulta molto utile specialmente negli esperimenti in cui si osse
 Punto critico del PFS è il rilevamento accurato di un certo piano assiale che possa essere utilizzato come riferimento per stabilire con precisione la distanza che deve intercorrere tra la superficie della lente obiettivo ed il piano focale di interesse nel campione. 
 A questo scopo il PFS utilizza un LED infrarosso a $870\ nm$ che non interferisce con i segnali raccolti dall'ottica dell'obiettivo: nè con la luce di eccitazione, né con quella emessa dai fluorofori, poiché presentano lunghezze d'onda di emissione comprese entro il range $[340\ -\ 770]\ nm$ (\figurename~\ref{fig:bande}).
 
-\begin{figure}
- \centering
- \includegraphics[scale=.70]{img/CAP2PFSschema.png}
- \caption{\small{Schema ottico dell'unità di Perfect Focus System (PFS).}}
- \label{fig:PFSschema}
-\end{figure}
-
-Servendoci della \figurename~\ref{fig:PFSschema} ripercorriamo il percorso della luce prodotta dal LED. 
-Innanzitutto viene fatta passare attraverso una lente condensatrice e la fenditura di una piastrina (Slit Plate).
-Una lente collimatrice converte la luce in un fascio di raggi paralleli, fatti passare poi in una maschera a mezza luna (half-moon mask), che serve per abbattere una parte dei raggi luminosi lungo l'asse ottico.
-Il fascio viene quindi trasmesso all'half-mirror, focalizzato dalle lenti del sistema di regolazione dell'offset e diretto verso un filtro anteposto all'ingresso del percorso ottico primario. 
-L'ingresso a tale percorso è mediato dallo specchio dicroico, che funge da intersezione dei due sistemi ottici trasmettendo la luce visibile e riflettendo quella infrarossa, evitando così che luce trasmessa o segnale di fluorescenza siano contaminati dal PFS. 
-A questo punto, il fascio originato dal LED viene focalizzato dall'obiettivo sull'interfaccia di riferimento, ossia sulla superficie ove l'indice di rifrazione cambia: o da coprivetrino ($n=1.5$) ad aria ($n=1$) o da coprivetrino a mezzo che circonda il campione ($1.33\leq n \geq 1.38$), rispettivamente per obiettivi a secco e ad immersione. 
-Su tale interfaccia la luce viene nuovamente riflessa e convertita in una fascio di raggi paralleli nel sistema ottico primario. 
-Quindi lo specchio dicroico riflette ancora il fascio, permettendone il rientro nel sistema ottico del PFS.
-Passano di nuovo attraverso il filtro per la luce visibile e le lenti di regolazione dell'offset, per poi entrare nell'half-mirror e quindi nel nuovo percorso in cui si forma l'immagine di rilevamento del fuoco. 
-Qui il fascio viene ritrasformato nell'immagine della fenditura da una lente collettrice, fatto passare attraverso le lenti ritardanti, la maschera a mezza luna ed una lente cilindrica per poi arrivare nella parte centrale del sensore CCD lineare sotto forma di una linea marcata.
-
-Una componente molto importante del PFS è il sistema di lenti per la regolazione dell'offset, posta tra l'half-mirror e lo specchio dicroico.
-Esso produce uno shift della posizione a fuoco dell'immagine della fenditura, in coordinazione con un sistema elettronico di feedback che controlla la posizione assiale del tavolino motorizzato.
-
-\begin{figure}
- \centering
- \includegraphics[scale=.65]{img/CAP2PFS.png}
- \caption{\small{Regolazione dell'offset nel PFS.}}
- \label{fig:PFS}
-\end{figure}
-
-La \figurename~\ref{fig:PFS} mostra come l'immagine del piano focale del campione (raggio giallo) e quella della fenditura (raggio rosso) siano rispettivamente dirette verso il rivelatore (o l'oculare) e verso il sensore CCD lineare attraverso due percorsi ottici indipendenti.
-L'immagine fa riferimento al caso particolare di obiettivi a secco, ossia ad interfaccia di riferimento data da coprivetrino-aria.
-Si nota che le lenti di offset si spostano in modo da regolare la posizione dell'immagine della fenditura sul sensore, mentre la ``lente torretta'' è fissa sull'asse ottico. 
-Inoltre, prima dell'inizializzazione del PFS, si ha una condizione di offset nullo, ossia la posizione di fuoco della lente obiettivo (F) e dell'immagine della fenditura (A) coincidono all'interfaccia di riferimento (\figurename~\ref{fig:PFS}/a). 
-Per poter introdurre un offset tra i piani focali delle due immagini si può variare la posizione della lente di offset attraverso una manopola del PSF, e quindi variare anche la posizione di fuoco dell'immagine di fenditura (\figurename~\ref{fig:PFS}/b). 
-Quando poi il sistema di feedback del PFS regola la $z$ dell'obiettivo in modo da ristabilire il piano focale A all'interfaccia coprivetrino-aria, il piano focale dell'immagine F viene spostato nella parte centrale del campione in esame (\figurename~\ref{fig:PFS}/c). 
-La distanza di offset che ora separa i due piani focali può essere regolata dall'operatore in modo da esplorare diversi piani di fuoco all'interno del campione.
-Quando l'interfaccia di riferimento si sposta lungo l'asse z l'immagine della fenditura sul rivelatore risulta shiftata e sfuocata e di conseguenza il controller del PFS sposta l'obiettivo in direzione compensatoria al movimento precedente fin quando non raggiunge nuovamente la situazione in cui l'immagine della fenditura compare al centro del sensore. 
-
-Tale sistema di controllo del fuoco presenta come vantaggio più grande il fatto di essere più veloce di ogni altro sistema esistente, in quanto il feedback viene fornito dal PFS ogni $5\ ms$ (per altri meccanismi esistenti di mantenimento del fuoco viene fornito al più ogni $500\ ms$) e la distanza tra l'obiettivo e il campione viene mantenuta costante con una precisione assiale di $0.025\ nm$. 
+Tale sistema di controllo del fuoco presenta come vantaggio la grande velocità di feedback, in quanto viene fornito dal PFS ogni $5\ ms$ (per altri meccanismi esistenti di mantenimento del fuoco viene fornito al più ogni $500\ ms$) e la distanza tra l'obiettivo e il campione viene mantenuta costante con una precisione assiale di $0.025\ nm$. 
 Tuttavia il PFS presenta alcuni limiti di utilizzo, legati al tipo di campione e di supporto usati. 
 Per esempio, nel caso di campioni immersi in mezzi acquosi occorre che lo spessore del mezzo sia di almeno $3\ mm$; la camera su cui sono coltivati i campioni deve avere un fondo di spessore compreso tra $150\ nm$ e $180\ nm$ per permettere una riflessione ottimale del segnale infrarosso; campioni troppo spessi o seminati su petri o vetrini di materiali diversi dal vetro, come per esempio la plastica, che presentano un forte scattering dell'infrarosso, non sono adatti per l'utilizzo del PFS. 
 
 Infine bisogna osservare che l''unità PFS Nikon è situata nel gruppo ottico di sei obiettivi, situato tra la torretta dei filtri per la fluorescenza e il tavolino del microscopio; che i suoi controlli elettronici sono anch'essi all'interno del gruppo ottico e sono autosufficienti, cioè non richiedono un software supplementare per la loro gestione e che il PFS può essere attivato o disattivato tramite una leva che inserisce o meno lo specchio dicroico nel percorso ottico primario del microscopio.
 
 
-\subsection{Software: Nis-Element 3.1}\label{NisElements}
+\subsection{Software Nis-Element 3.1}\label{NisElements}
 
 Nis-Element 3.1 è, come accennato, il software associato al microscopio Nikon Eclipse-Ti.
 Tramite tale software le immagini possono essere osservate o in modalità ``live'', ovvero in tempo reale, oppure in modalità di ``visualizzazione'', cioè mostrando le immagini acquisite e salvate in precedenza, su cui è possibile avviare un'eventuale elaborazione attraverso gli strumenti di analisi delle immagini digitali di cui il programma dispone.
@@ -564,7 +527,7 @@ L'effetto diffrattivo, al contrario delle aberrazioni, è una proprietà intrins
 Tuttavia, in alcuni casi, esso può venire attenuato tramite algoritmi applicati in una fase post-acquisizione sull'immagine desiderata, come per esempio con il cosiddetto \textit{algoritmo di deconvoluzione}.
 Questa  tecnica inizialmente nacque con lo scopo di rimuovere le sfocature caratteristiche di un sistema fuori fuoco che contaminavano le immagini di una vasta gamma di microscopi \cite{decon}. 
 
-\begin{figure}[h]
+\begin{figure}
  \centering
  \includegraphics[scale=.60]{img/CAP2decon.png}
  \caption{\small{Immagine a fluorescenza di una cellula endoteliale di bovino. La regione a sinistra mostra l'immagine originale, quella a destra il risultato di un processo iterativo di deconvoluzione bidimensionale.}}
