@@ -107,7 +107,7 @@ Detto in altri termini, il punto di massimo della funzione di verosimiglianza è
 
 Dopo varie analisi si è notato che la funzione che al meglio descrive il comportamento dei massimi di intensità è proporzionale ad una gaussiana multivariata, descritta all'interno della funzione \textit{gauss} tramite la relazione:
 $$ G = bg + maxint \cdot \exp \{ {-\frac{1}{2} [{     (\frac{x-cx}{dsx})^2   +  (\frac{y-cy}{dsy})^2  +  \frac{corr \cdot (x-cx) \cdot (y-cy)}{dsx \cdot dsy} ]}^{\frac{e}{2}}}\} $$
-dove $bg$ è il parametro di background, $maxint$ è l'intensità massima, $cx$ e $cy$ sono rispettivamente i centri delle coordinate x e y, $dsx$ e $dsy$ sono rispettivamente le deviazioni standard delle coordinate x e y, $corr$ è il parametro di correlazione tra x ed y ed infine $e$ è l'esponente.\todo{controllare la funzione, non mi porta l'esponente}
+dove $bg$ è il parametro di background, $maxint$ è l'intensità massima, $cx$ e $cy$ sono rispettivamente i centri delle coordinate x e y, $dsx$ e $dsy$ sono rispettivamente le deviazioni standard delle coordinate x e y, $corr$ è il parametro di correlazione tra x ed y ed infine $e$ è l'esponente.
 Facendo riferimento alla trattazione precedente, $G$ corrisponde alla funzione di verosimiglianza $L_{x_{oss}}(\theta)$, ove $\theta$ in tal caso è l'insieme dei parametri $(bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr,\ e)$.
 Essendo questo uno dei punti cardine della correzione, si è deciso di parallelizzare la funzione \textit{gauss}, così da avere un guadagno nei tempi dell'ordine di quattro volte.
 
@@ -121,7 +121,7 @@ Essendo questo uno dei punti cardine della correzione, si è deciso di paralleli
 \begin{figure}[p]
  \centering
  \includegraphics[scale=.64]{img/CAP3unaintcorr.png}
- \caption{\small{Immagine risultante dalla correzione dell'``effetto dei bordi'' sull'immagine in \figurename~\ref{fig:unaint}.}}
+ \caption{\small{Immagine risultante dalla correzione della disomogeneità di campo sull'immagine in \figurename~\ref{fig:unaint}.}}
  \label{fig:unaintcorr}
 \end{figure}
 
@@ -160,7 +160,7 @@ Un esempio dell'istogramma delle intensità risultante e del relativo fit si pu�
 \begin{figure}
  \centering
  \includegraphics[scale=.60]{img/CAP3istogauss.png}
- \caption{\small{Istogramma delle cinque curve gaussiane corrispondenti alle intensità dei massimi presenti nella seconda immagine di calibrazione, una volta corretta dall'``effetto dei bordi''. La linea marcata e l'area sfumata presenti su ogni curva rappresentano rispettivamente il valore medio e la deviazione standard della gaussiana, identificati dalla GMM.}}
+ \caption{\small{Istogramma delle cinque curve gaussiane corrispondenti alle intensità dei massimi presenti nella seconda immagine di calibrazione, una volta corretta dalla disomogeneità di illuminazione. La linea marcata e l'area sfumata presenti su ogni curva rappresentano rispettivamente il valore medio e la deviazione standard della gaussiana, identificati dalla GMM.}}
  \label{fig:istogauss}
 \end{figure}
 
@@ -173,7 +173,7 @@ Ad ogni modo la discrepanza risulta essere non troppo evidente e trattabile con 
 \begin{figure}
  \centering
  \includegraphics[scale=.55]{img/CAP3linearita.png}
- \caption{\small{Grafico con incertezze (non percettibili) delle intensità medie delle cinque gaussiane corrispondenti ai massimi della seconda immagine di calibrazione corretta dall'``effetto dei bordi'' in funzione di quelle note ed associate rette di regressione lineare. Sulla sinistra è riportato il grafico in scala logaritmica, mentre sulla destra in scala lineare.}}
+ \caption{\small{Grafico con incertezze (non percettibili) delle intensità medie delle cinque gaussiane corrispondenti ai massimi della seconda immagine di calibrazione corretta dalla disomogeneità di illuminazione in funzione di quelle note ed associate rette di regressione lineare. Sulla sinistra è riportato il grafico in scala logaritmica, mentre sulla destra in scala lineare.}}
  \label{fig:linearita}
 \end{figure}
 
