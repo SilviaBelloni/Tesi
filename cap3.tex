@@ -106,8 +106,8 @@ $$MLE = \hat{\theta}\ se\ L_{x_{oss}}(\hat{\theta})=\max_{\theta \in \Theta} L_{
 Detto in altri termini, il punto di massimo della funzione di verosimiglianza è il valore più plausibile di $\theta$ alla luce del campione osservato $x_{oss}$.
 
 Dopo varie analisi si è notato che la funzione che al meglio descrive il comportamento dei massimi di intensità è proporzionale ad una gaussiana multivariata, descritta all'interno della funzione \textit{gauss} tramite la relazione:
-$$ G = bg + maxint \cdot \exp \{ {-\frac{1}{2} [{     (\frac{x-cx}{dsx})^2   +  (\frac{y-cy}{dsy})^2  +  \frac{corr \cdot (x-cx) \cdot (y-cy)}{dsx \cdot dsy} ]}^{\frac{e}{2}}}\} $$
-dove $bg$ è il parametro di background, $maxint$ è l'intensità massima, $cx$ e $cy$ sono rispettivamente i centri delle coordinate x e y, $dsx$ e $dsy$ sono rispettivamente le deviazioni standard delle coordinate x e y, $corr$ è il parametro di correlazione tra x ed y ed infine $e$ è l'esponente.\todo{controllare la funzione, non mi porta l'esponente}
+$$ G = bg + maxint \cdot \exp \bigg\{ {-\frac{1}{2} \bigg[{ (\frac{x-cx}{dsx})^2   +  (\frac{y-cy}{dsy})^2  +  \frac{corr \cdot (x-cx) \cdot (y-cy)}{dsx \cdot dsy} \bigg]}^{\frac{e}{2}}}\bigg\} $$
+dove $bg$ è il parametro di background, $maxint$ è l'intensità massima, $cx$ e $cy$ sono rispettivamente i centri delle coordinate x e y, $dsx$ e $dsy$ sono rispettivamente le deviazioni standard delle coordinate x e y, $corr$ è il parametro di correlazione tra x ed y ed infine $e$ è l'esponente.
 Facendo riferimento alla trattazione precedente, $G$ corrisponde alla funzione di verosimiglianza $L_{x_{oss}}(\theta)$, ove $\theta$ in tal caso è l'insieme dei parametri $(bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr,\ e)$.
 Essendo questo uno dei punti cardine della correzione, si è deciso di parallelizzare la funzione \textit{gauss}, così da avere un guadagno nei tempi dell'ordine di quattro volte.
 
