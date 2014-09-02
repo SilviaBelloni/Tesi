@@ -69,11 +69,6 @@ Per tale motivo le intensità rilevate nell'immagine è giusto che si estendano 
 
 \section{Dipendenza spaziale dell'intensità}
 
-%In statistica, data un'ipotesi nulla ($H_0$), questa la si può accettare o rifiutare sulla base del cosiddetto \textit{p-value}, parametro probabilistico con valore compreso tra 0 ed 1.
-%Esso può essere definito come livello di significatività assegnato e quantifica la ``forza dell'evidenza'' contro l'ipotesi nulla $H_0$, a favore dell'alternativa, espressa dai dati osservati su un determinato campione. 
-%Per esempio, assegnato un valore di soglia, se il p-value è maggiore di tale valore allora $H_0$ non viene rigettata, in caso contrario sì.
-%Di conseguenza il p-value esprime quanto sia plausibile che i dati osservati si ottengano essendo vera l’ipotesi nulla: un p-value grande esprime evidenza sperimentale a favore dell'ipotesi nulla, mentre un suo valore piccolo un'evidenza a favore dell'ipotesi alternativa.
-
 Come criterio di evidenza della presenza o meno di una relazione fra l'intensità osservata e la posizione nel campo immagine, viene usato normalmente una soglia sul valore del p-value di questa ipotesi.
 Il p-value rappresenta la plausibilità di osservare una certa relazione fra l'intensità e la posizione nel cso sia vera una ipotesi, detta ipotesi nulla ($H_0$), secondo cui questa relazione non esista e quella osservata sia un effetto completamente casuale.
 Questo criterio di selezione afferma che l'ipotesi nulla possa essere rifiutata nel caso in cui il p-value ottenuto sia inferiore ad una soglia data, normalmente assunta al valore di $0.05$.
@@ -125,34 +120,6 @@ Per tale motivo sono stati confrontati i risultati ottenuti con quattro distinte
 
 Dalle Figure \ref{fig:gauss1}, \ref{fig:gauss2}, \ref{fig:gauss3} e \ref{fig:gauss4} è evidente il fatto che differenti immagini di calibrazioni comportino differenti superfici tridimensionali risultanti dal fit di maximum likelihood, indipendentemente dall'intensità relativa delle sferette.
 
-\begin{figure}
- \centering
- \includegraphics[scale=.45]{img/CAP4gauss1.png}
- \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
- \label{fig:gauss1}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[scale=.45]{img/CAP4gauss2.png}
- \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
- \label{fig:gauss2}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[scale=.45]{img/CAP4gauss3.png}
- \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
- \label{fig:gauss3}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[scale=.45]{img/CAP4gauss4.png}
- \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
- \label{fig:gauss4}
-\end{figure}
-
 Per poter avere un'analisi di carattere più quantitativo sono stati visualizzati i parametri $bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr$ ed $e$ ottenuti dalla stima di massima verosimiglianza (capitolo 3.1) eseguita nei quattro casi (Figure \ref{fig:cx}, \ref{fig:cy}, \ref{fig:dsx}, \ref{fig:dsy} \ref{fig:bg}, \ref{fig:intmax}, \ref{fig:corr} e \ref{fig:e}).
 Queste stime di massima verosimiglianza sono state inoltre raccolte nella \tablename~\ref{TABris}, assieme al primo parametro approssimato di background $bg_0$, calcolato inizialmente come massimo delle mode di ogni riga della matrice bidimensionale corrispondente all'immagine.
 
@@ -186,6 +153,37 @@ $\mathbf{e}$&$3.2\pm0.6$&$2.1\pm0.3$&$3.6\pm0.4$&$2.5\pm0.4$\\
 \end{small}
 \end{center}
 \end{table}
+
+\clearpage
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4gauss1.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss1}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4gauss2.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 10\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss2}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4gauss3.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla prima immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss3}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=.45]{img/CAP4gauss4.png}
+ \caption{\small{Immagine in visione ``cross eyed stereoscopic'' corrispondente alla seconda immagine di calibrazione con intensità relativa del 100\%: i puntini rappresentano i massimi mentre la superficie è quella risultante dal fit di maximum likelihood.}}
+ \label{fig:gauss4}
+\end{figure}
+
 
 \begin{figure}
  \centering
