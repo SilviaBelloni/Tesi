@@ -5,13 +5,13 @@
 %Questo progetto di tesi ha come obiettivo la calibrazione del microscopio a fluorescenza usato nel laboratorio di biofisica, così da poter eseguire analisi quantitative sulle immagini con esso acquisite.
 
 Questo progetto di tesi ha come obiettivo lo sviluppo di un algoritmo per la correzione e la calibrazione delle immagini in microscopia a fluorescenza e della sua implementazione come programma.
-Infatti, senza tale calibrazione le immagini a microscopia di fluorescenza sarebbero intrinsecamente affette da molteplici tipi di distorsioni ottiche.
+Infatti, senza tale calibrazione le immagini di microscopia a fluorescenza sarebbero intrinsecamente affette da molteplici tipi di distorsioni ottiche.
 Questo limita fortemente la possibilità di effettuare analisi quantitative del livello di fluorescenza osservato.
 Il difetto sul quale ci siamo soffermati è la disomogeneità di campo, ossia una non uniforme fluorescenza causata dalla forma irregolare del fascio di eccitazione.
 Per conseguire l'obiettivo da noi proposto è necessaria l'acquisizione, in parallelo al campione in esame, di immagini di calibrazione contenenti sfere nanometriche a fluorescenza nota.
 A partire da queste, tramite procedure di \textit{image processing} da noi implementate, abbiamo stimato la funzione di correzione della fluorescenza, localmente per ogni punto dell'immagine.
 Per la creazione di tale algoritmo abbiamo ipotizzato una possibile distribuzione dell'intensità dovuta alla non omogeneità del fascio ed abbiamo quindi stimato i parametri tramite un'apposita procedura di maximum likelihood.
-Tale stima è stata eseguita tenendo conto di possibili effetti dovuti alla luminosità di background, alla sovrapposizione di più nanosfere ed agli effetti di bordo nel processamento dell'immagine.
+Tale stima è stata eseguita tenendo conto di possibili effetti dovuti alla luminosità di background, alla sovrapposizione di più nanosfere e ad effetti di bordo nel corso dell'elaborazione.
 Questa procedura è stata ripetuta su quattro diverse immagini di calibrazione, per valutarne la consistenza e la validità.
 Inoltre, per poter verificare che il software di elaborazione abbia le desiderate proprietà di linearità tra segnale misurato ed intensità nota, ci siamo serviti di un'ulteriore immagine di calibrazione contenente una mistura di sfere nanometriche con intensità variabili su due ordini di grandezza.
 Il risultato di questo lavoro di tesi verrà incluso in un programma per la calibrazione delle immagini di fluorescenza acquisite al laboratorio di biofisica del Dipartimento di Fisica ed Astronomia di Bologna.
