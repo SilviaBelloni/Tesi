@@ -69,10 +69,15 @@ Per tale motivo le intensità rilevate nell'immagine è giusto che si estendano 
 
 \section{Dipendenza spaziale dell'intensità}
 
-In statistica, data un'ipotesi nulla ($H_0$), questa la si può accettare o rifiutare sulla base del cosiddetto \textit{p-value}, parametro probabilistico con valore compreso tra 0 ed 1.
-Esso può essere definito come livello di significatività assegnato e quantifica la ``forza dell'evidenza'' contro l'ipotesi nulla $H_0$, a favore dell'alternativa, espressa dai dati osservati su un determinato campione. 
-Per esempio, assegnato un valore di soglia, se il p-value è maggiore di tale valore allora $H_0$ non viene rigettata, in caso contrario sì.
-Di conseguenza il p-value esprime quanto sia plausibile che i dati osservati si ottengano essendo vera l’ipotesi nulla: un p-value grande esprime evidenza sperimentale a favore dell'ipotesi nulla, mentre un suo valore piccolo un'evidenza a favore dell'ipotesi alternativa.\todo{rivedere queste definizioni, non sono corrette}
+%In statistica, data un'ipotesi nulla ($H_0$), questa la si può accettare o rifiutare sulla base del cosiddetto \textit{p-value}, parametro probabilistico con valore compreso tra 0 ed 1.
+%Esso può essere definito come livello di significatività assegnato e quantifica la ``forza dell'evidenza'' contro l'ipotesi nulla $H_0$, a favore dell'alternativa, espressa dai dati osservati su un determinato campione. 
+%Per esempio, assegnato un valore di soglia, se il p-value è maggiore di tale valore allora $H_0$ non viene rigettata, in caso contrario sì.
+%Di conseguenza il p-value esprime quanto sia plausibile che i dati osservati si ottengano essendo vera l’ipotesi nulla: un p-value grande esprime evidenza sperimentale a favore dell'ipotesi nulla, mentre un suo valore piccolo un'evidenza a favore dell'ipotesi alternativa.
+
+Come criterio di evidenza della presenza o meno di una relazione fra l'intensità osservata e la posizione nel campo immagine, viene usato normalmente una soglia sul valore del p-value di questa ipotesi.
+Il p-value rappresenta la plausibilità di osservare una certa relazione fra l'intensità e la posizione nel cso sia vera una ipotesi, detta ipotesi nulla ($H_0$), secondo cui questa relazione non esista e quella osservata sia un effetto completamente casuale.
+Questo criterio di selezione afferma che l'ipotesi nulla possa essere rifiutata nel caso in cui il p-value ottenuto sia inferiore ad una soglia data, normalmente assunta al valore di $0.05$.
+Se la procedura di correzione funzionasse come previsto, dovremmo osservare un aumento dei p-value nei casi sotto studio.
 
 Come precedentemente osservato, la presenza di disomogenea di illuminazione comporta una dipendenza dell'intensità dei pixel (a parità di densità di fluoroforo) dalla loro posizione.
 In modo compatibile con la nostra ipotesi di lavoro stimiamo questa dipendenza come funzione della sola distanza dal centro dell'immagine.
@@ -82,7 +87,7 @@ Il p-value rapprenta quindi la probabilità di osservare l'andamento sperimental
 A tal proposito è stata valutata per ogni punto di massimo dell'immagine (centro delle sferette per le immagini di calibrazione e nuclei delle cellule per l'immagine da correggere) la distanza dall'origine, intesa come punto centrale dell'immagine stessa.
 Le immagini sono state quindi ridotte ad una serie di coppie intensità-distanza radiale.
 Per ottenere il valore del p-value si è quindi sfruttata la funzione \textit{linregress}, in grado di valutare la relazione lineare esistente o meno tra le intensità dei punti di massimo e le distanze radiali associate.
-Tale funzione restituisce il p-value come semplice parametro di return e questo viene valutato prendendo come ipotesi nulla $H_0$ il fatto che la slope sia nulla, quindi maggiore sarà il p-value e più plausibile sarà assumere l'assenza di una dipendenza spaziale dell'intensità.
+Tale funzione restituisce il p-value come semplice parametro di return e questo viene valutato prendendo come ipotesi nulla $H_0$ il fatto che la slope sia nulla, quindi minore sarà il p-value e meno plausibile sarà l'assenza di una dipendenza spaziale dell'intensità.
 
 \begin{figure}
  \centering
