@@ -14,7 +14,7 @@
 Obiettivo di questa tesi è la progettazione ed implementazione di un algoritmo di correzione e calibrazione di immagini generate tramite microscopia a fluorescenza.
 L'algoritmo è stato calibrato usando il microscopio a fluorescenza presente nel laboratorio di biofisica del Dipartimento di Fisica ed Astronomia di Bologna.
 Questa correzione ha lo scopo di migliorare l'analisi quantitativa di tali immagini, attualmente resa poco attendibile dalle varie imperfezioni ottiche presenti.
-Nello specifico ci siamo proposti di correggere il difetto di non omogeneità d'illuminazione, dovuto alla forma irregolare del fascio di eccitazione, e la rimozione della fluorescenze residua di background.
+Nello specifico ci siamo proposti di correggere il difetto di non omogeneità d'illuminazione, dovuto alla forma irregolare del fascio di eccitazione, e di rimuovere la fluorescenza residua di background.
 
 Tale correzione è basata sull'acquisizione, in parallelo al campione sotto esame, di immagini di calibrazione contenenti sfere nanometriche a fluorescenza nota.
 Parte del lavoro di tesi è consistita nella generazione di diverse di queste immagini, così da poter implementare e verificare il nostro metodo di \textit{image processing}.
@@ -33,4 +33,4 @@ Questo algoritmo verrà quindi inserito in un programma che permetterà la calib
 Per un futuro completamente della calibrazione del microscopio, successivamente a questo lavoro i tesi, sarà necessario includere addizionali metodi di correzione per tener conto di altre fonti di incertezza.
 Per prima cosa bisognerà ripetere l'acquisizione di immagini di calibrazione su più esperimenti, così da decidere se sia necessaria una calibrazione individuale per ciascun esperimento o se sia possibile una calibrazione generale, indipendentemente dal singolo esperimento.
 Dovranno essere valutati anche gli effetti di distorsione legati al sistema ottico, come aberrazioni sferiche, coma, astigmatismo e distorsione.
-Sarà anche importante valutare l'allineamento fra le immagini acquisite in campo chiaro e con diversi tipi di fluorescenza e stimare la Point Spread Function (PSF) del microscopio su ciascuna frequenza, per poter effettuare una deconvoluzione dell'immagine in grado di ridurre la perdita di risoluzione dovuta alla diffrazione.
+Sarà poi importante valutare l'allineamento fra le immagini acquisite in campo chiaro e con diversi tipi di fluorescenza e stimare la Point Spread Function (PSF) del microscopio su ciascuna frequenza, per poter effettuare una deconvoluzione dell'immagine in grado di ridurre la perdita di risoluzione dovuta alla diffrazione.
