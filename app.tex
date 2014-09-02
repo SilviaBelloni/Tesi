@@ -38,7 +38,7 @@ from matplotlib.colorbar import make_axes
 
 
 # DEFINIZIONE DELLE FUNZIONI ----------
-# Calcolo dell'intensita (integrale media) associata ad un massimo 
+# Calcolo dell'intensita da associare a ciascun massimo 
 def intensity(x, y, imm):
     z = []    
     delta = 5
@@ -81,7 +81,7 @@ def find_max(imm):
     z = intensity(x, y, imm)
     return x, y, z
 
-# Ricerca della funzione ''gauss'' che fitta al meglio i massimi
+# Funzione di verosimiglianza 
 def gauss(x, y, dsx, dsy, maxint, corr, cx, cy, bg, e):
         if dsx<0:
             return np.nan
@@ -105,7 +105,7 @@ def gauss(x, y, dsx, dsy, maxint, corr, cx, cy, bg, e):
         d = sqrt(varx+vary+varxy)
         return ne.evaluate('bg + maxint * exp( -0.5 * d**e )')
         
-# Ricerca dei parametri della curva ''gauss''
+# Funzione per il fit di maximum likelihood
 def analyze(imm):
     x, y, z = find_max(imm)
     xy = array(zip(x, y))
@@ -115,7 +115,7 @@ def analyze(imm):
     parametri_0 = (800, 600, np.max(imm), 0, 800, 600, 0, 2)
     parametri, covar = curve_fit(gauss_for_curve, xy, z, parametri_0)
     imm_normalized = correction(imm, parametri)
-    # Esclusione dei punti più intensi
+    # Esclusione dei punti corrispondenti a nanosfere sovrapposte
     quantile = mquantiles(imm_normalized[y, x], 0.95)
     newx, newy = [], []
     for (valore, xtemp, ytemp) in zip(imm_normalized[y, x], x, y):
@@ -130,7 +130,7 @@ def analyze(imm):
     print newparametri
     return newparametri
 
-# Correzione dell'immagine sulla base dei parametri della curva ''gauss''
+# Correzione dell'immagine sulla base della stima di massima verosimiglianza
 def correction(imm, par):
 
     xx, yy = np.meshgrid(np.linspace(0, 1600, 1600), np.linspace(0, 1200, 1200))
@@ -143,7 +143,7 @@ def correction(imm, par):
 # -------------------------------------
 
 
-# Fase I: EFFETTO DEI BORDI - IMMAGINE DELLE SFERETTE AD UNA SOLA INTENSITA
+# Fase I: DISOMOGENEITA DI CAMPO - IMMAGINE DELLE NANOSFERE AD UNA SOLA INTENSITA
 # Inserimento immagine da utente
 fname_sfere = PyZenity.GetFilename()[0]
 imm = pylab.imread(fname_sfere)
@@ -152,14 +152,14 @@ imm = gaussian_filter(imm, 2)
 # Sottrazione della prima approssimazione del background
 mode = max(scipy.stats.mode(imm)[0][0])
 imm = imm - mode
-# Ricerca dei parametri della curva ''gauss''
+# Ricerca della stima di massima verosimiglianza
 par = analyze(imm)
 # Autocorrezione dell'immagine delle sferette ad una sola intensita
 corretta = correction(imm, par)
 ######x, y, z = find_max(corretta)
 
 
-# Fase II: LINEARITA - IMMAGINE DELLE SFERETTE CON MIX DI INTENSITA
+# Fase II: FLURESCENZA DI SFONDO - IMMAGINE DELLE NANOSFERE CON MIX DI INTENSITA
 # Inserimento immagine da utente
 fname_sferemix = PyZenity.GetFilename()[0]
 imm1 = pylab.imread(fname_sferemix)
