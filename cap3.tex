@@ -21,7 +21,7 @@ Quest'ultimo difetto è quello che grava maggiormente su un'eventuale analisi qu
  \label{fig:bordi}
 \end{figure}
 
-Questo programma di correzione della luminosità sfrutta delle sfere nanometrice, di dimensione costante ed intensità di luminosità nota, prodotte appositamente per la calibrazione dei microscopi a fluorescenza.
+Questo programma di correzione della luminosità sfrutta delle sfere nanometriche, di dimensione costante ed intensità di luminosità nota, prodotte appositamente per la calibrazione dei microscopi a fluorescenza.
 Esistono diversi set di nanosfere in grado di coprire ampi range di intensità, così da poter creare una curva di calibrazione dall'intensità del segnale osservato (dipendente ad esempio dalla luminosità dell'irraggiamento e dal tempo di esposizione) alla concentrazione di fluoroforo sottostante.
  
 Nel nostro caso si è sfruttato il kit di sfere nanometriche fluorescenti nel rosso ``InSpeck Microscope Image Intensity Calibration'', acquistate appositamente per la calibrazione del microscopio in uso.
@@ -30,13 +30,13 @@ Tale richiesta nasce dal fatto che l'algoritmo effettua la correzione dell'immag
 
 Descriviamo dunque passo a passo le fasi principali dell'algoritmo, riportato nella sua interezza in Appendice A, che possono essere schematizzate in:
 \begin{enumerate}
- \item rimozione delle disomogeneità ai bordi dell'immagine,
+ \item rimozione della disomogeneità di illuminazione,
  \item rimozione della fluorescenza di background,
  \item correzione dell'immagine bersaglio.
 \end{enumerate}
 
 
-\section{Rimozione delle disomogeneità di illuminazione}
+\section{Rimozione della disomogeneità di illuminazione}
 
 Come precedentemente osservato, la disomogeneità di illuminazione comporta immagini a microscopia a fluorescenza con maggior segnale luminoso nella zona centrale rispetto alle regioni periferiche.
 L'algoritmo mira alla compensazione di questa disomogeneità stimando punto per punto il valore di segnale atteso a parità di concentrazione di fluoroforo ed usando questa stima per correggere le stime osservate.
@@ -106,7 +106,7 @@ $$MLE = \hat{\theta}\ se\ L_{x_{oss}}(\hat{\theta})=\max_{\theta \in \Theta} L_{
 Detto in altri termini, il punto di massimo della funzione di verosimiglianza è il valore più plausibile di $\theta$ alla luce del campione osservato $x_{oss}$.
 
 Dopo varie analisi si è notato che la funzione che al meglio descrive il comportamento dei massimi di intensità è proporzionale ad una gaussiana multivariata, descritta all'interno della funzione \textit{gauss} tramite la relazione:
-$$ G = bg + maxint \cdot \exp \bigg\{ {-\frac{1}{2} \bigg[{ (\frac{x-cx}{dsx})^2   +  (\frac{y-cy}{dsy})^2  +  \frac{corr \cdot (x-cx) \cdot (y-cy)}{dsx \cdot dsy} \bigg]}^{\frac{e}{2}}}\bigg\} $$
+$$ G = bg + maxint \cdot \exp \bigg\{ {-\frac{1}{2} \bigg[{ \bigg(\frac{x-cx}{dsx}\bigg)^2   +  \bigg(\frac{y-cy}{dsy}\bigg)^2  +  \frac{corr \cdot (x-cx) \cdot (y-cy)}{dsx \cdot dsy} \bigg]}^{\frac{e}{2}}}\bigg\} $$
 dove $bg$ è il parametro di background, $maxint$ è l'intensità massima, $cx$ e $cy$ sono rispettivamente i centri delle coordinate x e y, $dsx$ e $dsy$ sono rispettivamente le deviazioni standard delle coordinate x e y, $corr$ è il parametro di correlazione tra x ed y ed infine $e$ è l'esponente.
 Facendo riferimento alla trattazione precedente, $G$ corrisponde alla funzione di verosimiglianza $L_{x_{oss}}(\theta)$, ove $\theta$ in tal caso è l'insieme dei parametri $(bg,\ maxint,\ cx,\ cy,\ dsx,\ dsy,\ corr,\ e)$.
 Essendo questo uno dei punti cardine della correzione, si è deciso di parallelizzare la funzione \textit{gauss}, così da avere un guadagno nei tempi dell'ordine di quattro volte.
@@ -151,7 +151,7 @@ A questa viene applicato uno smoothing gaussiano e sottratto il parametro del ba
 Successivamente, sulla base dei parametri del fit calcolati tramite la prima immagine di calibrazione viene corretta la disomogeneità di illuminazione.
 
 A questo punto ai fini del controllo della risposta lineare del microscopio, vengono riconosciute nell'immagine le curve gaussiane relative alle differenti intensità. 
-Nel nostro caso sono stati inseriti nel campione cinque diversi tipi di sferette, escludendo quelle con intensità relativa del 0.3\% poiché non sufficientemente intensa intensa, e di conseguenza vengono riconosciute cinque distinte curve gaussiane.
+Nel nostro caso sono stati inseriti nel campione cinque diversi tipi di sferette, escludendo quelle con intensità relativa del 0.3\% poiché non sufficientemente intensa, e di conseguenza vengono riconosciute cinque distinte curve gaussiane.
 Queste sono state identificate tramite un \textit{Gaussian Mixture Model (GMM)} sul logaritmo delle intensità, nel quale le intensità sono distribuite in modo approssimativamente regolare con deviazione standard e numero di osservazioni simili fra le varie gaussiane. 
 Di ciascuna di questa viene registrata la media, la deviazione standard e la numerosità.
 Il fit è stato effettuato tramite la funzione per le \textit{Gaussian Mixture Model (GMM)} presente nella libreria \textit{scikits-learn}.
@@ -186,7 +186,7 @@ Ad ogni modo la discrepanza risulta essere non troppo evidente e trattabile con 
 \end{figure}
 
 Sulla base di tale ipotesi l'unico obiettivo rimasto risulta essere la rimozione del valore costante della fluorescenza di sfondo. 
-Per fare ciò basta occorre traslare i valori in modo da ottenere il passaggio della retta di regressione dall'origine, ossia a livello pratico è necessario sottrarre all'immagine l'intercetta calcolata. 
+Per fare ciò basta traslare i valori in modo da ottenere il passaggio della retta di regressione dall'origine, ossia a livello pratico è necessario sottrarre all'immagine l'intercetta calcolata. 
 Essendo questo un altro pasaggio cardine dell'algoritmo, si è scelto di rivalutare l'intercetta all'origine in modo più preciso, ossia tramite un secondo fit lineare eseguito con un'apposita funzione di \textit{curve\_fit}.
 A questo punto per la rimozione della fluorescenza di background basterà semplicemente sottrarre il parametro dell'ordinata all'origine all'intera immagine presa in considerazione. 
 L'immagine di calibrazione usata per correggere questo secondo difetto può essere a sua volta autocorretta, come mostrato in \figurename~\ref{fig:piuintcorr}.
@@ -194,7 +194,7 @@ L'immagine di calibrazione usata per correggere questo secondo difetto può esse
 Tramite questa seconda fase, che sfrutta l'immagine di calibrazione di nanosfere con differenti intensità e i parametri del fit di maximum likelihood ottenuti nella prima fase, si riesce quindi a eliminare in modo sostanziale l'ulteriore difetto della fluorescenza residua. 
 
 
-\section{Correzione dell'immagine}
+\section{Correzione dell'immagine bersaglio}
 
 La parte finale del programma è volta alla correzione di entrambi i difetti, l'illuminazione disomogenea e la fluorescenza residua, per una qualsiasi immagine acquisita con il microscopio a fluorescenza (\figurename~\ref{fig:cell}). 
 
